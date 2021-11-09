@@ -1,0 +1,11 @@
+- collision
+- rotating object (spinner)
+- falling object (obstacle)
+- audio (https://freesound.org/) (Audacity for creating custom)
+- sound on object (for collision)
+- particles effects
+- cheats
+- cinemachine package (cinamachine brain)
+- lights (directional, point)
+- skybox material
+- moving obstacles 
