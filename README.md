@@ -1,2 +1,2 @@
-## Unity Project for Computer Game Development Course
+## Unity Project for Computer Games Development Course
 
