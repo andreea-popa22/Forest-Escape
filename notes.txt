@@ -9,3 +9,9 @@
 - lights (directional, point)
 - skybox material
 - moving obstacles 
+
+
+Schita joc:
+- player 1.5		|
+- lane 2		| => latime harta = 10
+- margine pt decor 2    |
