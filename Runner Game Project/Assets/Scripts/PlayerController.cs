@@ -32,6 +32,15 @@ public class PlayerController : MonoBehaviour
             MoveLane(true);
         }
 
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            playerSpeed *= 1.5f;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            playerSpeed *= 0.5f;
+        }
+
         Vector3 targetPosition = transform.position.z * transform.forward + transform.position.y * transform.up;
         if (desiredLane == 0)
         {
