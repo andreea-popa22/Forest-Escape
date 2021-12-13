@@ -6,6 +6,7 @@ public class CollisionHandler : MonoBehaviour
 {
     private bool isTransitioning = false;
     private bool collisionDisabled = false;
+    private bool arrivedAtFinish = false;
 
     private void OnCollisionEnter(Collision other)
     {
@@ -13,6 +14,10 @@ public class CollisionHandler : MonoBehaviour
 
         switch (other.gameObject.tag)
         {
+            case "Fin":
+                arrivedAtFinish = true;
+                LoadNextLevel();
+                break;
             case "Friendly":
                 break;
             default:
@@ -34,5 +39,17 @@ public class CollisionHandler : MonoBehaviour
         Debug.Log("You lost!");
         ReloadLevel();
     }
+
+    void LoadNextLevel()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = currentSceneIndex + 1;
+        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
+        {
+            nextSceneIndex = 0;
+        }
+        SceneManager.LoadScene(nextSceneIndex);
+    }
+
     
 }
