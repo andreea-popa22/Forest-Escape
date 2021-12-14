@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Xml.Schema;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
+using Vector3 = UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,13 +14,14 @@ public class PlayerController : MonoBehaviour
     private const float laneDistance = 2.0f;
     private CharacterController controller;
     private int desiredLane = 1; // 0 Left, 1 Middle, 2 Right
+    private Vector3 targetPosition = Vector3.zero;
     
     [SerializeField] float playerSpeed = 1f;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        controller = GetComponent<CharacterController>();
+        //controller = GetComponent<CharacterController>();
     }
 
     private void Update()
@@ -32,16 +35,7 @@ public class PlayerController : MonoBehaviour
             MoveLane(true);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            playerSpeed *= 1.5f;
-        }
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            playerSpeed *= 0.5f;
-        }
-
-        Vector3 targetPosition = transform.position.z * transform.forward + transform.position.y * transform.up;
+        targetPosition = transform.position.z * transform.forward + transform.position.y * transform.up;
         if (desiredLane == 0)
         {
             targetPosition += Vector3.left * laneDistance;
@@ -51,15 +45,26 @@ public class PlayerController : MonoBehaviour
             targetPosition += Vector3.right * laneDistance;
         }
         
-        //transform.position = Vector3.Lerp(transform.position, targetPosition, playerSpeed * Time.deltaTime);
+        
         transform.position = targetPosition;
     }
     
     private void FixedUpdate()
      {
-         // Moving forward continuously 
-         rb.AddRelativeForce(Vector3.forward * playerSpeed);
+         MovingForward();
+
+         if (targetPosition != Vector3.zero)
+         {
+             transform.position = Vector3.Lerp(transform.position, targetPosition, laneDistance * Time.fixedDeltaTime);
+         }
+         
      }
+
+    public void MovingForward()
+    {
+        // Moving forward continuously 
+        rb.AddRelativeForce(Vector3.forward * playerSpeed);
+    }
 
     private void MoveLane(bool goingRight)
     {
