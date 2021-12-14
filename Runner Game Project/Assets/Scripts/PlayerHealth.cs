@@ -11,6 +11,7 @@ public class PlayerHealth : MonoBehaviour
     private SpriteRenderer sprite;
     private GameObject healthSprite;
     private Vector2 screenBounds;
+
     void Start()
     {
         healthBar = GameObject.Find("Bar");
@@ -39,7 +40,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         healthPoints -= damage;
-        LoseHealth();
+        TransformHealthBar();
         CollisionHandler ch = gameObject.GetComponent<CollisionHandler>();
         Debug.Log(healthPoints);
         if (healthPoints <= 0)
@@ -50,7 +51,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void LoseHealth()
+    public void TransformHealthBar()
     {
         Vector3 healthBarScale = healthBar.transform.localScale;
         float healthLevel = healthBarScale.x;

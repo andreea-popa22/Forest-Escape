@@ -38,7 +38,10 @@ public class CollisionHandler : MonoBehaviour
 
         // Decrease health
         gameObject.GetComponent<PlayerHealth>().TakeDamage(25f);
-        
+
+        // Decrease mana
+        gameObject.GetComponent<PlayerMana>().LoseMana(25f);
+
         // Move player back
         transform.position += Vector3.back * 3;
     }
