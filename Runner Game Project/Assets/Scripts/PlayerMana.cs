@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerMana : MonoBehaviour
 {
-    [SerializeField] float manaPoints = 100f;
+    [SerializeField] float manaPoints = 0f;
     public GameObject manaBar;
-    private float fullManaLevel;
-    private SpriteRenderer sprite;
+    private float fullManaLevel = 4f;
+    private SpriteRenderer spriteBar;
     private GameObject manaSprite;
     private Vector2 screenBounds;
 
@@ -17,7 +17,7 @@ public class PlayerMana : MonoBehaviour
     void Start()
     {
         manaBar = GameObject.Find("ManaBar");
-        fullManaLevel = manaBar.transform.localScale.x;
+        spriteBar = GameObject.Find("Mana Bar Sprite").GetComponent<SpriteRenderer>();
 
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
     }
@@ -25,28 +25,27 @@ public class PlayerMana : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        sprite = GameObject.Find("Mana Bar Sprite").GetComponent<SpriteRenderer>();
+        
     }
 
-    public void LoseMana(float damage)
+    public void AddMana(float mana)
     {
-        manaPoints -= damage;
+        manaPoints += mana;
+        if (manaPoints > 100f)
+        {
+            manaPoints = 100f;
+        }
+
         TransformManaBar();
         CollisionHandler ch = gameObject.GetComponent<CollisionHandler>();
-        Debug.Log(manaPoints);
-        if (manaPoints <= 0)
-        {
-            Debug.Log("You lost!");
-            gameObject.GetComponent<PlayerController>().enabled = false;
-            ch.Invoke("ReloadLevel", 1f);
-        }
     }
 
     public void TransformManaBar()
     {
-        Vector3 manaBarScale = manaBar.transform.localScale;
-        float manaLevel = manaBarScale.x;
-        manaLevel -= (0.25f * fullManaLevel);
-        manaBar.transform.localScale = new Vector3(manaLevel, manaBarScale.y, manaBarScale.z);
+        Vector3 spriteBarScale = spriteBar.transform.localScale;
+
+        spriteBarScale.x = (manaPoints / 100) * fullManaLevel;
+
+        spriteBar.transform.localScale = new Vector3(spriteBarScale.x, spriteBarScale.y, spriteBarScale.z);
     }
 }
