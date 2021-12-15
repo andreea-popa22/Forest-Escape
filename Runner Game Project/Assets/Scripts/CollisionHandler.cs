@@ -7,6 +7,7 @@ public class CollisionHandler : MonoBehaviour
 {
     private bool isTransitioning = false;
     private bool collisionDisabled = false;
+    private bool arrivedAtFinish = false;
 
     public void Start()
     {
@@ -21,6 +22,10 @@ public class CollisionHandler : MonoBehaviour
             case "Pickable":
                 other.gameObject.SetActive(false);
                 AddMana();
+                break;
+            case "Fin":
+                arrivedAtFinish = true;
+                LoadNextLevel();
                 break;
             case "Friendly":
                 break;
@@ -46,6 +51,18 @@ public class CollisionHandler : MonoBehaviour
         // Move player back
         transform.position += Vector3.back * 3;
     }
+
+    void LoadNextLevel()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = currentSceneIndex + 1;
+        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
+        {
+            nextSceneIndex = 0;
+        }
+        SceneManager.LoadScene(nextSceneIndex);
+    }
+
     
     public void AddMana()
     {

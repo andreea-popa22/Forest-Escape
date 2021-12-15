@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Obstacle
   - Friendly
-  - Pickable
+  - Fin
   layers:
   - Default
   - TransparentFX
