@@ -12,15 +12,15 @@ public class CollisionHandler : MonoBehaviour
     public void Start()
     {
     }
-    
-    private void OnCollisionEnter(Collision other)
+
+    private void handleObject(GameObject gameObject)
     {
         //if (isTransitioning || collisionDisabled) { return; }
 
-        switch (other.gameObject.tag)
+        switch (gameObject.tag)
         {
             case "Pickable":
-                other.gameObject.SetActive(false);
+                gameObject.SetActive(false);
                 AddMana();
                 break;
             case "Fin":
@@ -35,6 +35,17 @@ public class CollisionHandler : MonoBehaviour
         }
     }
     
+    private void OnCollisionEnter(Collision other)
+    {
+        handleObject(other.gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        handleObject(other.gameObject);
+    }
+    
+
     public void ReloadLevel()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
