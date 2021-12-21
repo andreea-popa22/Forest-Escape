@@ -10,18 +10,11 @@ public class PlayerHealth : MonoBehaviour
     private float fullHealthLevel;
     private SpriteRenderer sprite;
     private GameObject healthSprite;
-    private Vector2 screenBounds;
 
     void Start()
     {
         healthBar = GameObject.Find("Bar");
         fullHealthLevel = healthBar.transform.localScale.x;
-        
-        // fixed size - relative to screen resolution
-        //healthSprite = GameObject.Find("Health Bar");
-        //healthSprite.transform.localScale = new Vector3(Screen.width/1366f, Screen.height/768f,  1);
-        
-        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
     }
 
     // Update is called once per frame
@@ -32,8 +25,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //healthSprite = GameObject.Find("Health Bar");
-        //healthSprite.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.1f, 0.8f, 18f));
+        
         
     }
 
@@ -42,7 +34,6 @@ public class PlayerHealth : MonoBehaviour
         healthPoints -= damage;
         TransformHealthBar();
         CollisionHandler ch = gameObject.GetComponent<CollisionHandler>();
-        Debug.Log(healthPoints);
         if (healthPoints <= 0)
         {
             Debug.Log("You lost!");
