@@ -19,7 +19,7 @@ public class PlayerMana : MonoBehaviour
         manaBar = GameObject.Find("ManaBar");
         spriteBar = GameObject.Find("Mana Bar Sprite").GetComponent<SpriteRenderer>();
 
-        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        //screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
     }
 
     // Update is called once per frame

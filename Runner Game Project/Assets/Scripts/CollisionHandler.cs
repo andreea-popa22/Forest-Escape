@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
-    private bool isTransitioning = false;
+    public Vector3 crashPosition;
+    public bool isTransitioning = false;
     private bool collisionDisabled = false;
     private bool arrivedAtFinish = false;
 
@@ -20,6 +21,8 @@ public class CollisionHandler : MonoBehaviour
         switch (gameObject.tag)
         {
             case "Pickable":
+                PlayerScore playerScore = GameObject.Find("Player").GetComponent<PlayerScore>();
+                playerScore.itemsPicked += 1;
                 gameObject.SetActive(false);
                 AddMana();
                 break;
@@ -55,6 +58,7 @@ public class CollisionHandler : MonoBehaviour
     void StartCrashSequence()
     {
         isTransitioning = true;
+        crashPosition = transform.position;
 
         // Decrease health
         gameObject.GetComponent<PlayerHealth>().TakeDamage(25f);
