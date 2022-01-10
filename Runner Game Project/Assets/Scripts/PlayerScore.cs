@@ -9,11 +9,11 @@ public class PlayerScore : MonoBehaviour
     [SerializeField] private float score = 0f;
     [SerializeField] private float distanceCoef = 0.01f;
     [SerializeField] private int itemValue = 5;
-    Vector3 startPosition;
-    public int itemsPicked = 0;
-    float totalDistance = 0;
-    public Text scoreText;
-    private CollisionHandler collisionHandler;
+    [SerializeField] Vector3 startPosition;
+    [SerializeField] public int itemsPicked = 0;
+    [SerializeField] float totalDistance = 0;
+    [NonSerialized] public Text scoreText;
+    [NonSerialized] private CollisionHandler collisionHandler;
     
     // Start is called before the first frame update
     void Start()

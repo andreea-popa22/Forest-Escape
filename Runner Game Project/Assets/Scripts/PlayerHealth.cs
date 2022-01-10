@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] float healthPoints = 100f;
-    public GameObject healthBar;
+    [NonSerialized] public GameObject healthBar;
     private float fullHealthLevel;
     private SpriteRenderer sprite;
     private GameObject healthSprite;

@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerMana : MonoBehaviour
 {
     [SerializeField] float manaPoints = 0f;
-    public GameObject manaBar;
+    [NonSerialized] public GameObject manaBar;
     private float fullManaLevel = 4f;
     private SpriteRenderer spriteBar;
     private GameObject manaSprite;

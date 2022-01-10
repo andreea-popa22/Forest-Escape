@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
     private CharacterController controller;
-    private float currentLane = Lane.Middle;
+    [SerializeField] private float currentLane = Lane.Middle;
     private Vector3 targetPosition = Vector3.zero;
     
     [SerializeField] float playerSpeed = 1f;
@@ -25,6 +25,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+            SaveSystem.Save();
+        if (Input.GetKeyDown(KeyCode.Y))
+            SaveSystem.Load();
+
         if (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.LeftArrow))) // go left
             if (currentLane != Lane.Left)
                 currentLane -= Lane.Distance;
