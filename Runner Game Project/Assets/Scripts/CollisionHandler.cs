@@ -59,7 +59,6 @@ public class CollisionHandler : MonoBehaviour
     {
         isTransitioning = true;
         crashPosition = transform.position;
-
         // Decrease health
         gameObject.GetComponent<PlayerHealth>().TakeDamage(25f);
 

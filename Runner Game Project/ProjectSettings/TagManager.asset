@@ -9,6 +9,9 @@ TagManager:
   - Dropper
   - Ground
   - Fin
+  - Pickable
+  - Spinner
+  - Moving Obstacle
   layers:
   - Default
   - TransparentFX
