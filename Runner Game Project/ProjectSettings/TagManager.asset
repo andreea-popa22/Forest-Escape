@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Obstacle
   - Friendly
+  - Dropper
+  - Ground
+  - Fin
   layers:
   - Default
   - TransparentFX

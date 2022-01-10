@@ -1,18 +1,35 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
-    private bool isTransitioning = false;
+    public Vector3 crashPosition;
+    public bool isTransitioning = false;
     private bool collisionDisabled = false;
+    private bool arrivedAtFinish = false;
 
-    private void OnCollisionEnter(Collision other)
+    public void Start()
     {
-        if (isTransitioning || collisionDisabled) { return; }
+    }
 
-        switch (other.gameObject.tag)
+    private void handleObject(GameObject gameObject)
+    {
+        //if (isTransitioning || collisionDisabled) { return; }
+
+        switch (gameObject.tag)
         {
+            case "Pickable":
+                PlayerScore playerScore = GameObject.Find("Player").GetComponent<PlayerScore>();
+                playerScore.itemsPicked += 1;
+                gameObject.SetActive(false);
+                AddMana();
+                break;
+            case "Fin":
+                arrivedAtFinish = true;
+                LoadNextLevel();
+                break;
             case "Friendly":
                 break;
             default:
@@ -21,7 +38,18 @@ public class CollisionHandler : MonoBehaviour
         }
     }
     
-    void ReloadLevel()
+    private void OnCollisionEnter(Collision other)
+    {
+        handleObject(other.gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        handleObject(other.gameObject);
+    }
+    
+
+    public void ReloadLevel()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
@@ -30,9 +58,30 @@ public class CollisionHandler : MonoBehaviour
     void StartCrashSequence()
     {
         isTransitioning = true;
-        GetComponent<PlayerController>().enabled = false;
-        Debug.Log("You lost!");
-        ReloadLevel();
+        crashPosition = transform.position;
+
+        // Decrease health
+        gameObject.GetComponent<PlayerHealth>().TakeDamage(25f);
+
+        // Move player back
+        transform.position += Vector3.back * 3;
     }
+
+    void LoadNextLevel()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = currentSceneIndex + 1;
+        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
+        {
+            nextSceneIndex = 0;
+        }
+        SceneManager.LoadScene(nextSceneIndex);
+    }
+
     
+    public void AddMana()
+    {
+        gameObject.GetComponent<PlayerMana>().AddMana(25f);
+    }
+
 }

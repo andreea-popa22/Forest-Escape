@@ -15,3 +15,13 @@ Schita joc:
 - player 1.5		|
 - lane 2		| => latime harta = 10
 - margine pt decor 2    |
+
+
+Scena 2:
+Am creat un nou obiect: game object > plane
+si un nou material pentru a deosebi finish-ul de ground.
+Click pe scena 1 > create template from scene
+File > new scene > my template
+Am creat noua scena
+Am adaugat collision handler pt finish si tag nou pt el.
+
