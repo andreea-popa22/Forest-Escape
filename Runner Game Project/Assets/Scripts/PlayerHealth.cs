@@ -45,23 +45,22 @@ public class PlayerHealth : MonoBehaviour
     public void TransformHealthBar()
     {
         Vector3 healthBarScale = healthBar.transform.localScale;
-        float healthLevel = healthBarScale.x;
-        healthLevel -= (0.25f * fullHealthLevel);
+        float healthLevel = fullHealthLevel * (healthPoints / 100);
         ColorHealthBar(healthLevel);
         healthBar.transform.localScale = new Vector3(healthLevel, healthBarScale.y, healthBarScale.z);
     }
 
     public void ColorHealthBar(float healthLevel)
     {
-        if (healthLevel == fullHealthLevel * 0.75f)
+        if (healthLevel >= fullHealthLevel * 0.75f)
         {
             sprite.color = Color.yellow;
         }
-        else if (healthLevel == fullHealthLevel * 0.5f)
+        else if (healthLevel >= fullHealthLevel * 0.5f)
         {
             sprite.color = new Color32(250,106,3, 255);
         }
-        else if (healthLevel == fullHealthLevel * 0.25f)
+        else if (healthLevel >= fullHealthLevel * 0.25f)
         {
             sprite.color = Color.red;
         }
