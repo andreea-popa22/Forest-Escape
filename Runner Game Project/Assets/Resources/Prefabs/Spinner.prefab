@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 769550971993647347}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: -3, z: 30}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 6, y: 0.5, z: 0.2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -126,5 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  maxDistanceDropper: 335
-  maxDistanceSpinner: 100
+  maxDistanceDropper: 0
+  maxDistanceSpinner: 30
+  maxDistanceMovingObj: 0
+  moverSpeed: 7

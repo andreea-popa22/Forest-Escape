@@ -5,22 +5,25 @@ using UnityEngine;
 public class ObstaclesController : MonoBehaviour
 {
     public Transform player; //pozitie player
-    [SerializeField] float maxDistanceDropper = 335f; //distanta de unde cade dropperul
+    [SerializeField] float maxDistanceDropper = 25f; //distanta de unde cade dropperul
     private Rigidbody rb;
-    [SerializeField] float maxDistanceSpinner = 0f; //distanta de unde se roteste spinnerul
-    [SerializeField] private float maxDistanceMovingObj = 0f;
+    [SerializeField] float maxDistanceSpinner = 30f; //distanta de unde se roteste spinnerul
+    [SerializeField] private float maxDistanceMovingObj = 30;
+
+    public float moverSpeed = 7;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         rb.isKinematic = false;
+        player = GameObject.Find("Player").transform;
     }
 
     void Update()
     {
         if (Vector3.Distance(player.position, transform.position) <
-            maxDistanceDropper) //cand playerul se apropie va cadea dropperul
+            maxDistanceDropper && gameObject.tag.Equals(Prefabs.Dropper)) //cand playerul se apropie va cadea dropperul
         {
             rb.useGravity = true;
         }
@@ -29,17 +32,17 @@ public class ObstaclesController : MonoBehaviour
     private void FixedUpdate() //sa se roteasca spinnerul
     {
         if ((Vector3.Distance(player.position, transform.position) < maxDistanceSpinner) &&
-            gameObject.tag.Equals("Spinner"))
+            gameObject.tag.Equals(Prefabs.Spinner))
         {
             //cand playerul se apropie se roteste spinnerul
             transform.Rotate(0, 1f, 0);
         }
 
         if ((Vector3.Distance(player.position, transform.position) < maxDistanceMovingObj) &&
-            gameObject.tag.Equals("Moving Obstacle"))
+            gameObject.tag.Equals(Prefabs.MovingObstacle))
         {
             //cand playerul se apropie se roteste spinnerul
-            transform.Translate(0, 0, -1f);
+            transform.Translate(0, 0, -moverSpeed * Time.fixedDeltaTime);
         }
     }
 
