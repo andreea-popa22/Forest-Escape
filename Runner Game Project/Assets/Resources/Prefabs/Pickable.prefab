@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1853521119463181472}
   - component: {fileID: 1853521119463181484}
   m_Layer: 0
-  m_Name: PickUp-Mana
+  m_Name: Pickable
   m_TagString: Pickable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
