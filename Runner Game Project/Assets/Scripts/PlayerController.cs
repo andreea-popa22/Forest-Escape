@@ -11,11 +11,17 @@ using Vector3 = UnityEngine.Vector3;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
+<<<<<<< HEAD
     private CharacterController controller;
+=======
+
+    private CharacterController controller;
+>>>>>>> ebaeba5 (add jump)
     [SerializeField] private float currentLane = Lane.Middle;
     private Vector3 targetPosition = Vector3.zero;
-    
-    [SerializeField] float playerSpeed = 1f;
+    [SerializeField] float playerSpeed = 5f;
+    [SerializeField] private float jumpHeight;
+    [SerializeField] private float gravity;
 
     private void Start()
     {
@@ -24,41 +30,57 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Update()
+<<<<<<< HEAD
     {
         if (Input.GetKeyDown(KeyCode.R))
             SaveSystem.Save();
         if (Input.GetKeyDown(KeyCode.Y))
             SaveSystem.Load();
 
+=======
+    {  
+        //jump force
+        if (Input.GetKeyDown(KeyCode.Space) && rb.velocity.y >= 0) //velocity>0 means player is on the ground
+            rb.AddForce(Vector3.up * jumpHeight, ForceMode.VelocityChange); 
+        
+>>>>>>> ebaeba5 (add jump)
         if (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.LeftArrow))) // go left
             if (currentLane != Lane.Left)
                 currentLane -= Lane.Distance;
+        
         if (Input.GetKeyDown(KeyCode.D) || (Input.GetKeyDown(KeyCode.RightArrow))) // go right
-            if(currentLane != Lane.Right)
+            if (currentLane != Lane.Right)
                 currentLane += Lane.Distance;
 
         targetPosition = transform.position.z * transform.forward + transform.position.y * transform.up;
-        if(currentLane == Lane.Left)
+        
+        if (currentLane == Lane.Left)
             targetPosition += Vector3.left * Lane.Distance;
         else if (currentLane == Lane.Right)
             targetPosition += Vector3.right * Lane.Distance;
-        
+
         transform.position = targetPosition;
     }
 
+
     private void FixedUpdate()
     {
+        rb.AddForce(Physics.gravity * (gravity - 1) * rb.mass); //add gravity for make jump faster
         MovingForward();
         if (targetPosition != Vector3.zero)
         {
-            transform.position = Vector3.Lerp(transform.position, targetPosition, Lane.Distance * Time.fixedDeltaTime);
+            transform.position =
+                Vector3.Lerp(transform.position, targetPosition, Lane.Distance * Time.fixedDeltaTime);
         }
     }
+
 
     public void MovingForward()
     {
         // Moving forward continuously 
-        rb.AddRelativeForce(Vector3.forward * playerSpeed);
+        transform.Translate(Vector3.forward * Time.fixedDeltaTime * playerSpeed); //move player forward
+        //rb.AddForce(Vector3.forward * playerSpeed);
+        //rb.velocity = (Vector3.forward * playerSpeed);
+        //controller.Move(Vector3.forward * playerSpeed*Time.fixedDeltaTime);
     }
-
 }
