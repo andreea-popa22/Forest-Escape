@@ -31,6 +31,7 @@ public class CollisionHandler : MonoBehaviour
                 LoadNextLevel();
                 break;
             case "Friendly":
+                GameObject.Find("Player").GetComponent<PlayerController>().inAir=false;
                 break;
             default:
                 StartCrashSequence();

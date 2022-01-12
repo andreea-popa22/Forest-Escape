@@ -269,8 +269,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLane: 0
   playerSpeed: 10
-  jumpHeight: 350
-  gravity: 30
+  jumpHeight: 12
+  gravity: 2
+  inAir: 0
 --- !u!136 &380920851
 CapsuleCollider:
   m_ObjectHideFlags: 0

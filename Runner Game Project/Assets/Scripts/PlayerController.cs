@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float playerSpeed = 5f;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float gravity;
+    public bool inAir = false;
 
     private void Start()
     {
@@ -34,8 +35,11 @@ public class PlayerController : MonoBehaviour
 
 
         //jump force
-        if (Input.GetKeyDown(KeyCode.Space) && rb.velocity.y >= 0) //velocity>0 means player is on the ground
+        if (Input.GetKeyDown(KeyCode.Space) && rb.velocity.y == 0 && inAir==false) //velocity>0 means player is on the ground
+        {
             rb.AddForce(Vector3.up * jumpHeight, ForceMode.VelocityChange);
+            inAir = true;
+        }
 
 
         if (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.LeftArrow))) // go left
