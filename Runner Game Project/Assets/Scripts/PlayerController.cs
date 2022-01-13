@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     [SerializeField] private float currentLane = Lane.Middle;
     private Vector3 targetPosition = Vector3.zero;
+    public bool pausedGame = false;
+    public GameObject ui;
+    public Canvas pauseUI;
     
     [SerializeField] float playerSpeed = 1f;
 
@@ -21,6 +24,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         //controller = GetComponent<CharacterController>();
+        
+        ui = GameObject.Find("UI");
     }
 
     private void Update()
@@ -29,6 +34,11 @@ public class PlayerController : MonoBehaviour
             SaveSystem.Save();
         if (Input.GetKeyDown(KeyCode.Y))
             SaveSystem.Load();
+
+        if (Input.GetKeyDown(KeyCode.P) && pausedGame == false)
+            PauseGame();
+        // else if (Input.GetKeyDown(KeyCode.P) && pausedGame)
+        //     ResumeGame();
 
         if (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.LeftArrow))) // go left
             if (currentLane != Lane.Left)
@@ -61,4 +71,30 @@ public class PlayerController : MonoBehaviour
         rb.AddRelativeForce(Vector3.forward * playerSpeed);
     }
 
+    public void PauseGame()
+    {
+        Debug.Log("paused");
+        Time.timeScale = 0;
+        pausedGame = true;
+        pauseUI = ui.transform.Find("Pause Canvas").GetComponent<Canvas>();
+        // activate Pause Canvas
+        pauseUI.gameObject.SetActive(true); 
+        // activate Resume Button
+        pauseUI.transform.Find("Resume").GetComponent<Button>().gameObject.SetActive(true);
+        // activate Quit Button
+        pauseUI.transform.Find("Quit").GetComponent<Button>().gameObject.SetActive(true);
+    }
+    
+    public void ResumeGame()
+    {
+        Debug.Log("resumed");
+        Time.timeScale = 1;
+        pausedGame = false;
+        pauseUI.gameObject.SetActive(false); 
+    }
+    
+    public void QuitGame()
+    {
+        
+    }
 }

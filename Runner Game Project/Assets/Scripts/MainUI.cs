@@ -9,7 +9,6 @@ public class MainUI : MonoBehaviour
     public Button startButton;
     public PlayerController pc;
     private InputField inputName;
-    //private string input;
 
     void Awake()
     {
@@ -33,8 +32,7 @@ public class MainUI : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Return)) { SubmitName(inputName.text); }
-
-        if (Input.GetKeyUp(KeyCode.P)) { PauseGame();};
+        
     }
 
     void SubmitName(string arg0)
@@ -48,9 +46,5 @@ public class MainUI : MonoBehaviour
         menu.gameObject.SetActive(!menu.gameObject.activeSelf);
         pc.enabled = !pc.enabled;
     }
-
-    void PauseGame()
-    {
-        
-    }
+    
 }
