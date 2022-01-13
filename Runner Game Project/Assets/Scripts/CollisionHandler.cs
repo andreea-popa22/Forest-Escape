@@ -10,6 +10,8 @@ public class CollisionHandler : MonoBehaviour
     private bool collisionDisabled = false;
     private bool arrivedAtFinish = false;
 
+    private float manaPerPickable = 25f;
+
     public void Start()
     {
     }
@@ -24,14 +26,14 @@ public class CollisionHandler : MonoBehaviour
                 PlayerScore playerScore = GameObject.Find("Player").GetComponent<PlayerScore>();
                 playerScore.itemsPicked += 1;
                 gameObject.SetActive(false);
-                AddMana();
+                SetMana(GetMana() + manaPerPickable);
                 break;
             case "Fin":
                 arrivedAtFinish = true;
                 LoadNextLevel();
                 break;
             case "Friendly":
-                GameObject.Find("Player").GetComponent<PlayerController>().inAir=false;
+                GameObject.Find("Player").GetComponent<PlayerController>().inAir = false;
                 break;
             default:
                 StartCrashSequence();
@@ -58,13 +60,10 @@ public class CollisionHandler : MonoBehaviour
     
     void StartCrashSequence()
     {
-        isTransitioning = true;
+        float damage = IsInvincibile() ? 0 : 25f;
         crashPosition = transform.position;
-        // Decrease health
-        gameObject.GetComponent<PlayerHealth>().TakeDamage(25f);
-
-        // Move player back
-        transform.position += Vector3.back * 3;
+        gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);      // Decrease health
+        transform.position += Vector3.back * 3;                          // Move player back
     }
 
     void LoadNextLevel()
@@ -78,10 +77,18 @@ public class CollisionHandler : MonoBehaviour
         SceneManager.LoadScene(nextSceneIndex);
     }
 
-    
-    public void AddMana()
+    public float GetMana()
     {
-        gameObject.GetComponent<PlayerMana>().AddMana(25f);
+        return gameObject.GetComponent<PlayerMana>().GetMana();
     }
 
+    public void SetMana(float mana)
+    {
+        gameObject.GetComponent<PlayerMana>().SetMana(mana);
+    }
+
+    public bool IsInvincibile()
+    {
+        return gameObject.GetComponent<PlayerController>().isInvincibile();
+    }
 }
