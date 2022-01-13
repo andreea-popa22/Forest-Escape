@@ -33,20 +33,10 @@ public class CollisionHandler : MonoBehaviour
                 LoadNextLevel();
                 break;
             case "Friendly":
-                GameObject.Find("Player").GetComponent<PlayerController>().inAir=false;
+                GameObject.Find("Player").GetComponent<PlayerController>().inAir = false;
                 break;
             default:
-                if (GetMana() == 100f)
-                {
-                    // do some animation maybe?
-                    collisionDisabled = true;
-                    SetMana(0f);
-                    StartCrashSequence(true);
-                }
-                else
-                {
-                    StartCrashSequence();
-                }
+                StartCrashSequence();
                 break;
         }
     }
@@ -68,12 +58,12 @@ public class CollisionHandler : MonoBehaviour
         SceneManager.LoadScene(currentSceneIndex);
     }
     
-    void StartCrashSequence(bool activeArmor = false)
+    void StartCrashSequence()
     {
-        isTransitioning = true;
+        float damage = IsInvincibile() ? 0 : 25f;
         crashPosition = transform.position;
-        gameObject.GetComponent<PlayerHealth>().TakeDamage(activeArmor ? 0f : 25f);         // Decrease health
-        transform.position += Vector3.back * 3;                                             // Move player back
+        gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);      // Decrease health
+        transform.position += Vector3.back * 3;                          // Move player back
     }
 
     void LoadNextLevel()
@@ -95,5 +85,10 @@ public class CollisionHandler : MonoBehaviour
     public void SetMana(float mana)
     {
         gameObject.GetComponent<PlayerMana>().SetMana(mana);
+    }
+
+    public bool IsInvincibile()
+    {
+        return gameObject.GetComponent<PlayerController>().isInvincibile();
     }
 }

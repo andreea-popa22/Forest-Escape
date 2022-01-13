@@ -14,38 +14,42 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     [SerializeField] private float currentLane = Lane.Middle;
     private Vector3 targetPosition = Vector3.zero;
+    public bool pausedGame = false;
+    [NonSerialized] public GameObject ui;
+    [NonSerialized] public Canvas pauseUI;
+
     [SerializeField] float playerSpeed = 5f;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float gravity;
+
+    public float boostCooldown = 5f;
+    public float boostDuration = 2f;
+    private float speedBoost = 2f;
+    private float invincibilityDuration = 2f;
+    private bool hasInvincibility = false;
+    private bool hasBoost = false;
+    private bool hasBoostCooldown;
     public bool inAir = false;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         //controller = GetComponent<CharacterController>();
+        
+        ui = GameObject.Find("UI");
     }
 
     private void Update()
-
     {
-        if (!isCrouching && Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !hasBoostCooldown)
         {
-            isSprinting = true;
-            isCrouching = false;
+            // activate the cooldown and start the deactivation method for the boost
+            StartCoroutine(ActivateCooldown());
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.F) && GetMana() == GetMaxMana())
         {
-            isSprinting = false;
-        }
-
-        if (!isSprinting && Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            isCrouching = true;
-            isSprinting = false;
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftControl))
-        {
-            isCrouching = false;
+            // activate invincibility if mana is full
+            StartCoroutine(ActivateInvincibility(invincibilityDuration));
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -61,6 +65,9 @@ public class PlayerController : MonoBehaviour
             inAir = true;
         }
 
+
+        if (Input.GetKeyDown(KeyCode.P) && pausedGame == false)
+            PauseGame();
 
         if (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.LeftArrow))) // go left
             if (currentLane != Lane.Left)
@@ -83,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.AddForce(Physics.gravity * (gravity - 1) * rb.mass); //add gravity for make jump faster
+        rb.AddForce(Physics.gravity * (gravity - 1) * rb.mass); // add gravity for make jump faster
         MovingForward();
         if (targetPosition != Vector3.zero)
         {
@@ -92,16 +99,81 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    IEnumerator ActivateCooldown()
+    {
+        hasBoostCooldown = true;
+        hasBoost = true;
+        yield return new WaitForSeconds(boostDuration);     // wait until the boost is ready again
+        hasBoost = false;
+        yield return new WaitForSeconds(boostCooldown);
+        hasBoostCooldown = false;
+        Debug.Log("boost ready");
+    }
+
+    IEnumerator ActivateInvincibility(float duration)
+    {
+        SetMana(0);
+        Debug.Log("Player now invincible!");
+        hasInvincibility = true;
+        yield return new WaitForSeconds(duration);
+        hasInvincibility = false;
+        Debug.Log("Player invincible no more!");
+    }
 
     public void MovingForward()
     {
         var currentSpead = playerSpeed;
-        if (isSprinting) currentSpead = playerSpeed * sprintMultiplier;       // * 2
-        else if (isCrouching) currentSpead = playerSpeed * crouchMultiplier;  // * .71
+        if (hasBoost) currentSpead = playerSpeed * speedBoost;  // * 2
 
-        Debug.Log(currentSpead);
-
-
-        transform.Translate(Vector3.forward * Time.fixedDeltaTime * playerSpeed); //move player forward
+        transform.Translate(Vector3.forward * Time.fixedDeltaTime * currentSpead); //move player forward
     }
+
+    public void PauseGame()
+    {
+        Debug.Log("paused");
+        Time.timeScale = 0;
+        pausedGame = true;
+        pauseUI = ui.transform.Find("Pause Canvas").GetComponent<Canvas>();
+        // activate Pause Canvas
+        pauseUI.gameObject.SetActive(true); 
+        // activate Resume Button
+        pauseUI.transform.Find("Resume").GetComponent<Button>().gameObject.SetActive(true);
+        // activate Quit Button
+        pauseUI.transform.Find("Quit").GetComponent<Button>().gameObject.SetActive(true);
+    }
+    
+    public void ResumeGame()
+    {
+        Debug.Log("resumed");
+        Time.timeScale = 1;
+        pausedGame = false;
+        pauseUI.gameObject.SetActive(false); 
+    }
+
+    public float GetMana()
+    {
+        return gameObject.GetComponent<PlayerMana>().GetMana();
+    }
+
+    public float GetMaxMana()
+    {
+        return gameObject.GetComponent<PlayerMana>().GetMaxMana();
+    }
+
+    public bool isInvincibile()
+    {
+        return hasInvincibility;
+    }
+
+    public void SetMana(float mana)
+    {
+        gameObject.GetComponent<PlayerMana>().SetMana(mana);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+
 }
