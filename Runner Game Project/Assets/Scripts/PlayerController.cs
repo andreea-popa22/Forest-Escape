@@ -28,6 +28,26 @@ public class PlayerController : MonoBehaviour
     private void Update()
 
     {
+        if (!isCrouching && Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            isSprinting = true;
+            isCrouching = false;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            isSprinting = false;
+        }
+
+        if (!isSprinting && Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            isCrouching = true;
+            isSprinting = false;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            isCrouching = false;
+        }
+
         if (Input.GetKeyDown(KeyCode.R))
             SaveSystem.Save();
         if (Input.GetKeyDown(KeyCode.Y))
@@ -75,10 +95,13 @@ public class PlayerController : MonoBehaviour
 
     public void MovingForward()
     {
-        // Moving forward continuously 
+        var currentSpead = playerSpeed;
+        if (isSprinting) currentSpead = playerSpeed * sprintMultiplier;       // * 2
+        else if (isCrouching) currentSpead = playerSpeed * crouchMultiplier;  // * .71
+
+        Debug.Log(currentSpead);
+
+
         transform.Translate(Vector3.forward * Time.fixedDeltaTime * playerSpeed); //move player forward
-        //rb.AddForce(Vector3.forward * playerSpeed);
-        //rb.velocity = (Vector3.forward * playerSpeed);
-        //controller.Move(Vector3.forward * playerSpeed*Time.fixedDeltaTime);
     }
 }

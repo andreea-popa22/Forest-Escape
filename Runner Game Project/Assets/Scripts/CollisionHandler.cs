@@ -10,6 +10,8 @@ public class CollisionHandler : MonoBehaviour
     private bool collisionDisabled = false;
     private bool arrivedAtFinish = false;
 
+    private float manaPerPickable = 25f;
+
     public void Start()
     {
     }
@@ -24,7 +26,7 @@ public class CollisionHandler : MonoBehaviour
                 PlayerScore playerScore = GameObject.Find("Player").GetComponent<PlayerScore>();
                 playerScore.itemsPicked += 1;
                 gameObject.SetActive(false);
-                AddMana();
+                SetMana(GetMana() + manaPerPickable);
                 break;
             case "Fin":
                 arrivedAtFinish = true;
@@ -34,7 +36,17 @@ public class CollisionHandler : MonoBehaviour
                 GameObject.Find("Player").GetComponent<PlayerController>().inAir=false;
                 break;
             default:
-                StartCrashSequence();
+                if (GetMana() == 100f)
+                {
+                    // do some animation maybe?
+                    collisionDisabled = true;
+                    SetMana(0f);
+                    StartCrashSequence(true);
+                }
+                else
+                {
+                    StartCrashSequence();
+                }
                 break;
         }
     }
@@ -56,15 +68,12 @@ public class CollisionHandler : MonoBehaviour
         SceneManager.LoadScene(currentSceneIndex);
     }
     
-    void StartCrashSequence()
+    void StartCrashSequence(bool activeArmor = false)
     {
         isTransitioning = true;
         crashPosition = transform.position;
-        // Decrease health
-        gameObject.GetComponent<PlayerHealth>().TakeDamage(25f);
-
-        // Move player back
-        transform.position += Vector3.back * 3;
+        gameObject.GetComponent<PlayerHealth>().TakeDamage(activeArmor ? 0f : 25f);         // Decrease health
+        transform.position += Vector3.back * 3;                                             // Move player back
     }
 
     void LoadNextLevel()
@@ -78,10 +87,13 @@ public class CollisionHandler : MonoBehaviour
         SceneManager.LoadScene(nextSceneIndex);
     }
 
-    
-    public void AddMana()
+    public float GetMana()
     {
-        gameObject.GetComponent<PlayerMana>().AddMana(25f);
+        return gameObject.GetComponent<PlayerMana>().GetMana();
     }
 
+    public void SetMana(float mana)
+    {
+        gameObject.GetComponent<PlayerMana>().SetMana(mana);
+    }
 }

@@ -29,16 +29,25 @@ public class PlayerMana : MonoBehaviour
         
     }
 
+    public float GetMana()
+    {
+        return manaPoints;
+    }
+
+    public void SetMana(float mana)
+    {
+        if (mana > 100f) { mana = 100f; }
+        if (mana < 0f) { mana = 0f; }
+        manaPoints = mana;
+        TransformManaBar();
+    }
+
     public void AddMana(float mana)
     {
         manaPoints += mana;
-        if (manaPoints > 100f)
-        {
-            manaPoints = 100f;
-        }
+        
 
         TransformManaBar();
-        CollisionHandler ch = gameObject.GetComponent<CollisionHandler>();
     }
 
     public void TransformManaBar()
