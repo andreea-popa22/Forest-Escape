@@ -52,11 +52,8 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(ActivateInvincibility(invincibilityDuration));
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-            SaveSystem.Save();
-        if (Input.GetKeyDown(KeyCode.Y))
-            SaveSystem.Load();
-
+        if (Input.GetKeyDown(KeyCode.R)) SaveSystem.Save();
+        if (Input.GetKeyDown(KeyCode.Y)) SaveSystem.Load();
 
         //jump force
         if (Input.GetKeyDown(KeyCode.Space) && rb.velocity.y == 0 && inAir==false) //velocity>0 means player is on the ground
@@ -69,20 +66,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P) && pausedGame == false)
             PauseGame();
 
-        if (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.LeftArrow))) // go left
-            if (currentLane != Lane.Left)
-                currentLane -= Lane.Distance;
+        if (currentLane != Lane.Left && Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) // go left
+            currentLane -= Lane.Distance;
 
-        if (Input.GetKeyDown(KeyCode.D) || (Input.GetKeyDown(KeyCode.RightArrow))) // go right
-            if (currentLane != Lane.Right)
-                currentLane += Lane.Distance;
+        if (currentLane != Lane.Right && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))) // go right
+            currentLane += Lane.Distance;
 
         targetPosition = transform.position.z * transform.forward + transform.position.y * transform.up;
 
-        if (currentLane == Lane.Left)
-            targetPosition += Vector3.left * Lane.Distance;
-        else if (currentLane == Lane.Right)
-            targetPosition += Vector3.right * Lane.Distance;
+        if (currentLane == Lane.Left) targetPosition += Vector3.left * Lane.Distance;
+        else if (currentLane == Lane.Right) targetPosition += Vector3.right * Lane.Distance;
 
         transform.position = targetPosition;
     }
