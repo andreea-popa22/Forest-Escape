@@ -95,6 +95,6 @@ public class PlayerController : MonoBehaviour
     
     public void QuitGame()
     {
-        
+        Application.Quit();
     }
 }
