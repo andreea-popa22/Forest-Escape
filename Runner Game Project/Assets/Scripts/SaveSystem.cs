@@ -44,7 +44,7 @@ public static class SaveSystem
         File.Create(LEADERBOARD_FILE);
         string data = File.ReadAllText(LEADERBOARD_FILE);
         var list = JsonUtility.FromJson<List<LeaderboardEntry>>(data);
-        list.Add(new LeaderboardEntry(name, score));
+        list.Add(new LeaderboardEntry() { name = name, score = score });
         File.WriteAllText(LEADERBOARD_FILE, JsonUtility.ToJson(list, prettyPrint: true));
     }
 
