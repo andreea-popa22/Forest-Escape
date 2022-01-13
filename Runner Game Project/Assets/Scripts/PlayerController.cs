@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float currentLane = Lane.Middle;
     private Vector3 targetPosition = Vector3.zero;
     public bool pausedGame = false;
-    public GameObject ui;
-    public Canvas pauseUI;
+    [NonSerialized] public GameObject ui;
+    [NonSerialized] public Canvas pauseUI;
 
     [SerializeField] float playerSpeed = 5f;
     [SerializeField] private float jumpHeight;
