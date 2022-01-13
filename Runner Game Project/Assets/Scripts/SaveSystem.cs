@@ -26,9 +26,33 @@ public class GameData
     public List<ObjectData> objects = new List<ObjectData>();
 }
 
+[Serializable]
+public class LeaderboardEntry
+{
+    public string name;
+    public int score;
+}
+
 public static class SaveSystem
 {
-    public static string SAVE_FOLDER = Application.persistentDataPath + "/";
+    public static readonly string SAVE_FOLDER = Application.persistentDataPath + "/";
+    public static readonly string SAVE_FILE = SAVE_FOLDER + "save.json";
+    public static readonly string LEADERBOARD_FILE = SAVE_FOLDER + "leaderboard.json";
+
+    public static void AddToLeaderBoard(string name, int score)
+    {
+        File.Create(LEADERBOARD_FILE);
+        string data = File.ReadAllText(LEADERBOARD_FILE);
+        var list = JsonUtility.FromJson<List<LeaderboardEntry>>(data);
+        list.Add(new LeaderboardEntry(name, score));
+        File.WriteAllText(LEADERBOARD_FILE, JsonUtility.ToJson(list, prettyPrint: true));
+    }
+
+    public static List<LeaderboardEntry> LoadLeaderboards()
+    {
+        string data = File.ReadAllText(LEADERBOARD_FILE);
+        return JsonUtility.FromJson<List<LeaderboardEntry>>(data);
+    }
 
     public static void Save()
     {
@@ -55,15 +79,15 @@ public static class SaveSystem
                 prefab = obs.tag,
             });
         }
-        File.WriteAllText(SAVE_FOLDER + "save.json", JsonUtility.ToJson(gameData, true));
+        File.WriteAllText(SAVE_FILE, JsonUtility.ToJson(gameData, true));
     }
 
     public static void Load()
     {
-        if (!File.Exists(SAVE_FOLDER + "save.json"))
+        if (!File.Exists(SAVE_FILE))
             return;
 
-        string dataJson = File.ReadAllText(SAVE_FOLDER + "save.json");
+        string dataJson = File.ReadAllText(SAVE_FILE);
 
         var player = GameObject.Find("Player");
         GameData gameData = JsonUtility.FromJson<GameData>(dataJson);
