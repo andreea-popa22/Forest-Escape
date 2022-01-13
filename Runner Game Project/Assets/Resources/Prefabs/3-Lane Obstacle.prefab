@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1105947159333474108, guid: ad183e837031b914083882a8cb2b831e, type: 3}
       propertyPath: m_Name
-      value: '2-Lane Obstacle '
+      value: 3-Lane Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 1105947159333474109, guid: ad183e837031b914083882a8cb2b831e, type: 3}
       propertyPath: m_RootOrder
@@ -29,7 +29,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1105947159333474109, guid: ad183e837031b914083882a8cb2b831e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1105947159333474109, guid: ad183e837031b914083882a8cb2b831e, type: 3}
       propertyPath: m_LocalRotation.w
