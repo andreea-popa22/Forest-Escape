@@ -3,13 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Rotator : MonoBehaviour
+
 {
-    // Update is called once per frame
-    void Update()
+    float maxAngle = 15;
+    float speed = 100;
+
+    private void FixedUpdate()
     {
-        // Rotate the game object that this script is attached to by 15 in the X axis,
-        // 30 in the Y axis and 45 in the Z axis, multiplied by deltaTime in order to make it per second
-        // rather than per frame.
-        transform.Rotate(new Vector3(15, 30, 45) * Time.deltaTime);
+        float z = transform.rotation.eulerAngles.z;
+        if (z > 360 - maxAngle)
+            z -= 360;
+        if (Mathf.Abs(z) > maxAngle)
+        {
+            speed = -speed;
+            transform.rotation.eulerAngles.Set(0, 0, maxAngle - 1);
+        }
+
+        transform.Rotate(new Vector3(0, 0, speed * Time.fixedDeltaTime));
     }
 }

@@ -50,6 +50,8 @@ public class CollisionHandler : MonoBehaviour
             case "Friendly":
                 GameObject.Find("Player").GetComponent<PlayerController>().inAir = false;
                 break;
+            case "Decor":
+                break;
             default:
                 StartCrashSequence();
                 break;
