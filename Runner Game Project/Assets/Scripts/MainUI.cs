@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class MainUI : MonoBehaviour
 {
-    public GameObject menu;
+    public GameObject ui;
+    public Canvas menu;
     public Button startButton;
+    public Button resumeButton;
     public PlayerController pc;
     private InputField inputName;
 
@@ -18,14 +20,18 @@ public class MainUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        menu = GameObject.Find("Start Canvas");
+        ui = GameObject.Find("UI");
+        menu = ui.transform.Find("Start Canvas").GetComponent<Canvas>();
         
-        startButton = GameObject.Find("Start").GetComponent<Button>();
+        startButton = menu.transform.Find("Start").GetComponent<Button>();
         startButton.onClick.AddListener(StartGame);
+        
+        resumeButton = menu.transform.Find("Resume").GetComponent<Button>();
+        resumeButton.onClick.AddListener(ResumeGameProgress);
         
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
         
-        inputName = GameObject.Find("Name Textbox").GetComponent<InputField>();
+        inputName = menu.transform.Find("Name Textbox").GetComponent<InputField>();
     }
 
     // Update is called once per frame
@@ -35,16 +41,20 @@ public class MainUI : MonoBehaviour
         
     }
 
-    void SubmitName(string arg0)
+    void SubmitName(string name)
     {
-        Debug.Log(arg0);
+        Debug.Log(name);
     }
     
     void StartGame()
     {
         Debug.Log("yes");
         menu.gameObject.SetActive(!menu.gameObject.activeSelf);
-        pc.enabled = !pc.enabled;
+        pc.enabled = true;
     }
-    
+
+    void ResumeGameProgress()
+    {
+        //SaveSystem.Load();
+    }
 }

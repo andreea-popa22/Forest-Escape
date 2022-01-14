@@ -17,11 +17,13 @@ public class PlayerController : MonoBehaviour
     public bool pausedGame = false;
     [NonSerialized] public GameObject ui;
     [NonSerialized] public Canvas pauseUI;
+    [NonSerialized] public Canvas saveStateUI;
 
     [SerializeField] float playerSpeed = 5f;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float gravity;
     public bool inAir = false;
+    
 
     private void Start()
     {
@@ -105,6 +107,9 @@ public class PlayerController : MonoBehaviour
         pauseUI.transform.Find("Resume").GetComponent<Button>().gameObject.SetActive(true);
         // activate Quit Button
         pauseUI.transform.Find("Quit").GetComponent<Button>().gameObject.SetActive(true);
+        
+        saveStateUI = ui.transform.Find("Save State").GetComponent<Canvas>();
+
     }
     
     public void ResumeGame()
@@ -117,6 +122,7 @@ public class PlayerController : MonoBehaviour
     
     public void QuitGame()
     {
-        Application.Quit();
+        pauseUI.gameObject.SetActive(false);
+        saveStateUI.gameObject.SetActive(true);
     }
 }

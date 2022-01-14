@@ -10,11 +10,16 @@ public class PlayerHealth : MonoBehaviour
     private float fullHealthLevel;
     private SpriteRenderer sprite;
     private GameObject healthSprite;
+    public GameObject ui;
+    public Canvas menu;
 
     void Start()
     {
         healthBar = GameObject.Find("Bar");
         fullHealthLevel = healthBar.transform.localScale.x;
+        
+        ui = GameObject.Find("UI");
+        menu = ui.transform.Find("End Canvas").GetComponent<Canvas>();
     }
 
     // Update is called once per frame
@@ -31,14 +36,21 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        healthPoints -= damage;
-        TransformHealthBar();
-        CollisionHandler ch = gameObject.GetComponent<CollisionHandler>();
-        if (healthPoints <= 0)
+        if (healthPoints != 0)
         {
+            healthPoints -= damage;
+            TransformHealthBar();
+            CollisionHandler ch = gameObject.GetComponent<CollisionHandler>();
+
+        }
+        else if (healthPoints <= 0)
+        {
+            // activate end UI
+            menu.gameObject.SetActive(true);
+            
             Debug.Log("You lost!");
             gameObject.GetComponent<PlayerController>().enabled = false;
-            ch.Invoke("ReloadLevel", 1f);
+            //ch.Invoke("ReloadLevel", 1f);
         }
     }
 
