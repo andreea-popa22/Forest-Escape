@@ -31,11 +31,7 @@ public class PlayerController : MonoBehaviour
     private bool hasBoost = false;
     private bool hasBoostCooldown;
     public bool inAir = false;
-<<<<<<< HEAD
-    
-=======
     public Animator anim;
->>>>>>> 80a88d1 (added asset for player and animations for movement)
 
     private void Start()
     {
@@ -52,7 +48,6 @@ public class PlayerController : MonoBehaviour
             // activate the cooldown and start the deactivation method for the boost
             StartCoroutine(ActivateCooldown());
         }
-
         if (Input.GetKeyDown(KeyCode.F) && GetMana() == GetMaxMana())
         {
             // activate invincibility if mana is full
@@ -63,8 +58,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Y)) SaveSystem.Load();
 
         //jump force
-        if (Input.GetKeyDown(KeyCode.Space) && rb.velocity.y == 0 &&
-            inAir == false) //velocity>0 means player is on the ground
+        if (Input.GetKeyDown(KeyCode.Space) && rb.velocity.y == 0 && inAir==false) //velocity>0 means player is on the ground
         {
             anim.SetBool("inAir1", true);
             rb.AddForce(Vector3.up * jumpHeight, ForceMode.VelocityChange);
@@ -78,8 +72,7 @@ public class PlayerController : MonoBehaviour
         if (currentLane != Lane.Left && Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) // go left
             currentLane -= Lane.Distance;
 
-        if (currentLane != Lane.Right &&
-            (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))) // go right
+        if (currentLane != Lane.Right && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))) // go right
             currentLane += Lane.Distance;
 
         targetPosition = transform.position.z * transform.forward + transform.position.y * transform.up;
@@ -106,7 +99,7 @@ public class PlayerController : MonoBehaviour
     {
         hasBoostCooldown = true;
         hasBoost = true;
-        yield return new WaitForSeconds(boostDuration); // wait until the boost is ready again
+        yield return new WaitForSeconds(boostDuration);     // wait until the boost is ready again
         hasBoost = false;
         yield return new WaitForSeconds(boostCooldown);
         hasBoostCooldown = false;
@@ -126,7 +119,7 @@ public class PlayerController : MonoBehaviour
     public void MovingForward()
     {
         var currentSpead = playerSpeed;
-        if (hasBoost) currentSpead = playerSpeed * speedBoost; // * 2
+        if (hasBoost) currentSpead = playerSpeed * speedBoost;  // * 2
 
         transform.Translate(Vector3.forward * Time.fixedDeltaTime * currentSpead); //move player forward
     }
@@ -138,7 +131,7 @@ public class PlayerController : MonoBehaviour
         pausedGame = true;
         pauseUI = ui.transform.Find("Pause Canvas").GetComponent<Canvas>();
         // activate Pause Canvas
-        pauseUI.gameObject.SetActive(true);
+        pauseUI.gameObject.SetActive(true); 
         // activate Resume Button
         pauseUI.transform.Find("Resume").GetComponent<Button>().gameObject.SetActive(true);
         // activate Quit Button
@@ -147,13 +140,13 @@ public class PlayerController : MonoBehaviour
         saveStateUI = ui.transform.Find("Save State").GetComponent<Canvas>();
 
     }
-
+    
     public void ResumeGame()
     {
         Debug.Log("resumed");
         Time.timeScale = 1;
         pausedGame = false;
-        pauseUI.gameObject.SetActive(false);
+        pauseUI.gameObject.SetActive(false); 
     }
 
     public float GetMana()
@@ -181,4 +174,6 @@ public class PlayerController : MonoBehaviour
         pauseUI.gameObject.SetActive(false);
         saveStateUI.gameObject.SetActive(true);
     }
+
+
 }
