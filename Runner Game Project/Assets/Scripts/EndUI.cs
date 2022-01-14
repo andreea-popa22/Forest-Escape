@@ -10,11 +10,10 @@ public class EndUI : MonoBehaviour
     public GameObject ui;
     public Canvas endMenu;
     public Button newGameButton;
-    public PlayerController pc;
     [NonSerialized] private Button leaderboardButton;
     [NonSerialized] private Text content;
     [NonSerialized] private Canvas leaderboardMenu;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,9 +27,8 @@ public class EndUI : MonoBehaviour
         leaderboardButton = endMenu.transform.Find("Leaderboard").GetComponent<Button>();
         leaderboardButton.onClick.AddListener(WriteLeaderboardInUI);
         
-        pc = GameObject.Find("Player").GetComponent<PlayerController>();
-
         content = leaderboardMenu.transform.Find("Content").GetComponent<Text>();
+
     }
 
     // Update is called once per frame
@@ -42,9 +40,6 @@ public class EndUI : MonoBehaviour
     void StartNewGame()
     {
         SceneManager.LoadScene(0);
-        endMenu.gameObject.SetActive(false);
-        ui.transform.Find("Start Canvas").GetComponent<Canvas>().gameObject.SetActive(false);
-        pc.enabled = true;
     }
 
     void WriteLeaderboardInUI()

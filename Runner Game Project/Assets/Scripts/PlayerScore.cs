@@ -16,7 +16,6 @@ public class PlayerScore : MonoBehaviour
     [NonSerialized] public Text scoreText;
     [NonSerialized] private CollisionHandler collisionHandler;
     [NonSerialized] public int prevScore;
-    [NonSerialized] private string prevScoreKey = "PreviousScore";
     
     // Start is called before the first frame update
     void Start()
@@ -24,8 +23,8 @@ public class PlayerScore : MonoBehaviour
         startPosition = transform.position;
         scoreText = GameObject.Find("Score").GetComponent<Text>();
         collisionHandler = gameObject.GetComponent<CollisionHandler>();
-        
-        prevScore = PlayerPrefs.GetInt(prevScoreKey,0);
+        score = 0;
+        prevScore = PlayerPrefs.GetInt(PlayerPrefsKeys.prevSceneScore, 0);
     }
 
     // Update is called once per frame
@@ -37,20 +36,8 @@ public class PlayerScore : MonoBehaviour
     private void FixedUpdate()
     {
         totalDistance = Vector3.Distance(transform.position, startPosition);
-        //oldPosition = transform.position;
         if (maxDist < totalDistance)
             maxDist = totalDistance;
-        // if (!collisionHandler.isTransitioning)
-        // {
-        //     CalculateScore(itemsPicked, maxDist);
-        // }
-        // else
-        // {
-        //     if (transform.position.z >= collisionHandler.crashPosition.z + 1)
-        //     {
-        //         collisionHandler.isTransitioning = false;
-        //     }
-        // }
         CalculateScore(itemsPicked, maxDist);
     }
 
@@ -60,9 +47,9 @@ public class PlayerScore : MonoBehaviour
         scoreText.GetComponent<Text>().text = "Score: " + (int) score;
     }
 
-    public void AddScore()
+    public void SaveScoreToPrefs()
     {
-        PlayerPrefs.SetInt(prevScoreKey, (int) score);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.prevSceneScore, (int) score);
         PlayerPrefs.Save();
     }
 }

@@ -33,13 +33,11 @@ public class SaveStateUI : MonoBehaviour
     void SaveState()
     {
         SaveSystem.Save();
-        saveStateUI.gameObject.SetActive(false);
         Application.Quit();
     }
 
     void NoSave()
     {
-        saveStateUI.gameObject.SetActive(false);
         Application.Quit();
     }
 }

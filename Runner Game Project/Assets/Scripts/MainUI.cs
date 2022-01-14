@@ -15,9 +15,7 @@ public class MainUI : MonoBehaviour
     [NonSerialized] private Button leaderboardButton;
     [NonSerialized] private Text content;
     [NonSerialized] private Canvas leaderboardMenu;
-    [NonSerialized] private string prevScoreKey = "PreviousScore";
-    [NonSerialized] private string playerNameKey = "PlayerName";
-
+    
     void Awake()
     {
         
@@ -40,6 +38,7 @@ public class MainUI : MonoBehaviour
         leaderboardButton.onClick.AddListener(WriteLeaderboardInUI);
         
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
+        pc.enabled = false;
         
         //ps = GameObject.Find("Player").GetComponent<PlayerScore>();
         
@@ -47,28 +46,17 @@ public class MainUI : MonoBehaviour
         
         content = leaderboardMenu.transform.Find("Content").GetComponent<Text>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Return)) { SubmitName(inputName.text); }
-        
-    }
-
-    void SubmitName(string name)
-    {
-        PlayerPrefs.SetString(playerNameKey, name);
-        PlayerPrefs.Save();
-    }
     
     void StartGame()
     {
         // check previous score
-        int prev = PlayerPrefs.GetInt(prevScoreKey, 0);
-        SaveSystem.CheckScore(prev);
-        
+        int prev = PlayerPrefs.GetInt(PlayerPrefsKeys.prevSceneScore, 0);
+
         // initialize score 0
-        PlayerPrefs.SetInt(prevScoreKey, 0);
+        if(inputName.text == "")
+            PlayerPrefs.SetString(PlayerPrefsKeys.name, "Foxy");
+        else
+            PlayerPrefs.SetString(PlayerPrefsKeys.name, inputName.text);
         PlayerPrefs.Save();
         
         menu.gameObject.SetActive(false);

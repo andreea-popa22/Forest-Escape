@@ -17,12 +17,10 @@ public class CollisionHandler : MonoBehaviour
     [NonSerialized] public GameObject ui;
     [NonSerialized] public Canvas endMenu;
     [NonSerialized] public Text congratulations;
-    [NonSerialized] private PlayerController pc;
 
     public void Start()
     {
         ps = GameObject.Find("Player").GetComponent<PlayerScore>();
-        pc = GameObject.Find("Player").GetComponent<PlayerController>();
         
         ui = GameObject.Find("UI");
         endMenu = ui.transform.Find("End Canvas").GetComponent<Canvas>();
@@ -44,7 +42,7 @@ public class CollisionHandler : MonoBehaviour
                 break;
             case "Fin":
                 CheckFinishGame();
-                ps.AddScore();
+                ps.SaveScoreToPrefs();
                 arrivedAtFinish = true;
                 LoadNextLevel();
                 UnloadPreviousLevel();
@@ -162,9 +160,9 @@ public class CollisionHandler : MonoBehaviour
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         if (currentSceneIndex == 2)
         {
+            SaveSystem.SaveHighScore();
             endMenu.gameObject.SetActive(true);
             congratulations.gameObject.SetActive(true);
-            pc.enabled = false;
         }
     }
 }

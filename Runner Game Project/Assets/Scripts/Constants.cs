@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+public static class PlayerPrefsKeys {
+    public const string prevSceneScore = "PreviousScore";
+    public const string name = "PlayerName";
+}
+
 // Lane-ul este pe Axa X
 public static class Lane
 {

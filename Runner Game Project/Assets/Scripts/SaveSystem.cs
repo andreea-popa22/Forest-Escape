@@ -127,13 +127,18 @@ public static class SaveSystem
         }
     }
 
-    public static void CheckScore(int score)
+    public static void SaveHighScore()
     {
+        Debug.Log("Save Score");
+
+        int score = PlayerPrefs.GetInt(PlayerPrefsKeys.prevSceneScore);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.prevSceneScore, 0);
+
         List<LeaderboardEntry> leaderboard = LoadLeaderboard();
         if (leaderboard.Count > 0)
         {
             Debug.Log("mai mare ca 0");
-            string name = PlayerPrefs.GetString("PlayerName", "Empty");
+            string name = PlayerPrefs.GetString(PlayerPrefsKeys.name);
             if (score > leaderboard[4].score)
             {
                 leaderboard[4] = new LeaderboardEntry(name, score);

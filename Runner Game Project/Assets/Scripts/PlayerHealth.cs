@@ -13,7 +13,7 @@ public class PlayerHealth : MonoBehaviour
     private GameObject healthSprite;
     [NonSerialized] private PlayerScore ps;
     [NonSerialized] public GameObject ui;
-    [NonSerialized] public Canvas menu;
+    [NonSerialized] public Canvas endMenu;
     [NonSerialized] public Text gameOver;
     //[NonSerialized] private string prevScoreKey = "PreviousScore";
 
@@ -23,7 +23,7 @@ public class PlayerHealth : MonoBehaviour
         fullHealthLevel = healthBar.transform.localScale.x;
         
         ui = GameObject.Find("UI");
-        menu = ui.transform.Find("End Canvas").GetComponent<Canvas>();
+        endMenu = ui.transform.Find("End Canvas").GetComponent<Canvas>();
         
         gameOver = menu.transform.Find("Game over").GetComponent<Text>();
 
@@ -56,12 +56,13 @@ public class PlayerHealth : MonoBehaviour
         else if (healthPoints <= 0)
         {
             // activate end UI
-            menu.gameObject.SetActive(true);
+            endMenu.gameObject.SetActive(true);
             gameOver.gameObject.SetActive(true);
             
             Debug.Log("You lost!");
-            ps.AddScore();
+            ps.SaveScoreToPrefs();
             gameObject.GetComponent<PlayerController>().enabled = false;
+            SaveSystem.SaveHighScore();
             //ch.Invoke("ReloadLevel", 1f);
         }
     }
