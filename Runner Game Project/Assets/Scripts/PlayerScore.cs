@@ -6,12 +6,13 @@ using UnityEngine.UI;
 
 public class PlayerScore : MonoBehaviour
 {
-    [SerializeField] private float score;
+    [SerializeField] private float score = 0f;
     [SerializeField] private float distanceCoef = 0.01f;
     [SerializeField] private int itemValue = 5;
     [SerializeField] Vector3 startPosition;
     [SerializeField] public int itemsPicked = 0;
     [SerializeField] float totalDistance = 0;
+    [NonSerialized] private float maxDist = 0f;
     [NonSerialized] public Text scoreText;
     [NonSerialized] private CollisionHandler collisionHandler;
     [NonSerialized] public int prevScore;
@@ -37,22 +38,25 @@ public class PlayerScore : MonoBehaviour
     {
         totalDistance = Vector3.Distance(transform.position, startPosition);
         //oldPosition = transform.position;
-        if (!collisionHandler.isTransitioning)
-        {
-            calculateScore(itemsPicked, totalDistance);
-        }
-        else
-        {
-            if (transform.position.z >= collisionHandler.crashPosition.z + 1)
-            {
-                collisionHandler.isTransitioning = false;
-            }
-        }
+        if (maxDist < totalDistance)
+            maxDist = totalDistance;
+        // if (!collisionHandler.isTransitioning)
+        // {
+        //     CalculateScore(itemsPicked, maxDist);
+        // }
+        // else
+        // {
+        //     if (transform.position.z >= collisionHandler.crashPosition.z + 1)
+        //     {
+        //         collisionHandler.isTransitioning = false;
+        //     }
+        // }
+        CalculateScore(itemsPicked, maxDist);
     }
 
-    void calculateScore(int items, float dist)
+    void CalculateScore(int items, float dist)
     {
-        score = totalDistance * distanceCoef + items * itemValue + prevScore;
+        score = dist * distanceCoef + items * itemValue + prevScore;
         scoreText.GetComponent<Text>().text = "Score: " + (int) score;
     }
 

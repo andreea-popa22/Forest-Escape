@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -29,8 +30,26 @@ public class GameData
 [Serializable]
 public class LeaderboardEntry
 {
-    public string name;
     public int score;
+    public string name;
+
+    public LeaderboardEntry()
+    {
+        this.score = 0;
+        this.name = "Empty";
+    }
+    
+    public LeaderboardEntry(string name, int score)
+    {
+        this.name = name;
+        this.score = score;
+    }
+}
+
+[Serializable]
+public class ListScores
+{
+    public List<LeaderboardEntry> list;
 }
 
 public static class SaveSystem
@@ -39,21 +58,16 @@ public static class SaveSystem
     public static readonly string SAVE_FILE = SAVE_FOLDER + "save.json";
     public static readonly string LEADERBOARD_FILE = SAVE_FOLDER + "leaderboard.json";
 
-    public static void AddToLeaderBoard(string name, int score)
+    public static void AddToLeaderBoard(List<LeaderboardEntry> list)
     {
-        File.Create(LEADERBOARD_FILE);
-        string data = File.ReadAllText(LEADERBOARD_FILE);
-        var list = JsonUtility.FromJson<List<LeaderboardEntry>>(data);
-        list.Add(new LeaderboardEntry() { name = name, score = score });
-        File.WriteAllText(LEADERBOARD_FILE, JsonUtility.ToJson(list, prettyPrint: true));
+        File.WriteAllText(LEADERBOARD_FILE, JsonUtility.ToJson(new ListScores(){list = list}, true));
     }
 
-    public static List<LeaderboardEntry> LoadLeaderboards()
+    public static List<LeaderboardEntry> LoadLeaderboard()
     {
         if (File.Exists(LEADERBOARD_FILE))
-            return JsonUtility.FromJson<List<LeaderboardEntry>>(File.ReadAllText(LEADERBOARD_FILE));
-        else
-            return new List<LeaderboardEntry>();
+            return JsonUtility.FromJson<ListScores>(File.ReadAllText(LEADERBOARD_FILE)).list;
+        return EmptyLeaderboard();
     }
 
     public static void Save()
@@ -111,5 +125,53 @@ public static class SaveSystem
                 ob.transform.position = data.position;
             }
         }
+    }
+
+    public static void CheckScore(int score)
+    {
+        List<LeaderboardEntry> leaderboard = LoadLeaderboard();
+        if (leaderboard.Count > 0)
+        {
+            Debug.Log("mai mare ca 0");
+            string name = PlayerPrefs.GetString("PlayerName", "Empty");
+            if (score > leaderboard[4].score)
+            {
+                leaderboard[4] = new LeaderboardEntry(name, score);
+                leaderboard = leaderboard.OrderByDescending(o=>o.score).ToList();
+            }
+            AddToLeaderBoard(leaderboard);
+        } 
+        
+    }
+    
+    public static string WriteLeaderboard()
+    {
+        string text = "";
+        List<LeaderboardEntry> leaderboard = LoadLeaderboard();
+        Debug.Log(leaderboard.Count.ToString());
+        foreach (LeaderboardEntry entry in leaderboard)
+        {
+            Debug.Log("nu e gol");
+            // add place
+            text += (leaderboard.IndexOf(entry) + 1).ToString() + ".  ";
+            // add score
+            text += entry.score + "  ";
+            // add name
+            text += entry.name + "\n";
+        }
+        // write index+1 , entry.tostring, \n
+        return text;
+    }
+
+    public static List<LeaderboardEntry> EmptyLeaderboard()
+    {
+        List<LeaderboardEntry> leaderboard = new List<LeaderboardEntry>();
+        for (int i = 0; i < 5; i++)
+        {
+            LeaderboardEntry entry = new LeaderboardEntry();
+            leaderboard.Add(entry);
+        }
+        AddToLeaderBoard(leaderboard);
+        return leaderboard;
     }
 }

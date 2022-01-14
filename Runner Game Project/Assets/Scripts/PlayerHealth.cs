@@ -10,9 +10,10 @@ public class PlayerHealth : MonoBehaviour
     private float fullHealthLevel;
     private SpriteRenderer sprite;
     private GameObject healthSprite;
+    [NonSerialized] private PlayerScore ps;
     [NonSerialized] public GameObject ui;
     [NonSerialized] public Canvas menu;
-    [NonSerialized] private string prevScoreKey = "PreviousScore";
+    //[NonSerialized] private string prevScoreKey = "PreviousScore";
 
     void Start()
     {
@@ -21,6 +22,9 @@ public class PlayerHealth : MonoBehaviour
         
         ui = GameObject.Find("UI");
         menu = ui.transform.Find("End Canvas").GetComponent<Canvas>();
+        
+        ps = GameObject.Find("Player").GetComponent<PlayerScore>();
+
     }
 
     // Update is called once per frame
@@ -50,6 +54,7 @@ public class PlayerHealth : MonoBehaviour
             menu.gameObject.SetActive(true);
             
             Debug.Log("You lost!");
+            ps.AddScore();
             gameObject.GetComponent<PlayerController>().enabled = false;
             //ch.Invoke("ReloadLevel", 1f);
         }
