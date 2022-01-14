@@ -52,7 +52,6 @@ public class EndUI : MonoBehaviour
         endMenu.gameObject.SetActive(false);
         leaderboardMenu.gameObject.SetActive(true);
         string text = SaveSystem.WriteLeaderboard();
-        Debug.Log("dc nu scrie");
         content.text = text;
     }
 }

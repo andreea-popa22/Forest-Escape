@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
     [NonSerialized] private PlayerScore ps;
     [NonSerialized] public GameObject ui;
     [NonSerialized] public Canvas menu;
+    [NonSerialized] public Text gameOver;
     //[NonSerialized] private string prevScoreKey = "PreviousScore";
 
     void Start()
@@ -22,6 +24,9 @@ public class PlayerHealth : MonoBehaviour
         
         ui = GameObject.Find("UI");
         menu = ui.transform.Find("End Canvas").GetComponent<Canvas>();
+        
+        gameOver = menu.transform.Find("Game over").GetComponent<Text>();
+
         
         ps = GameObject.Find("Player").GetComponent<PlayerScore>();
 
@@ -52,6 +57,7 @@ public class PlayerHealth : MonoBehaviour
         {
             // activate end UI
             menu.gameObject.SetActive(true);
+            gameOver.gameObject.SetActive(true);
             
             Debug.Log("You lost!");
             ps.AddScore();

@@ -17,7 +17,7 @@ public class MainUI : MonoBehaviour
     [NonSerialized] private Canvas leaderboardMenu;
     [NonSerialized] private string prevScoreKey = "PreviousScore";
     [NonSerialized] private string playerNameKey = "PlayerName";
-    
+
     void Awake()
     {
         
@@ -71,7 +71,7 @@ public class MainUI : MonoBehaviour
         PlayerPrefs.SetInt(prevScoreKey, 0);
         PlayerPrefs.Save();
         
-        menu.gameObject.SetActive(!menu.gameObject.activeSelf);
+        menu.gameObject.SetActive(false);
         pc.enabled = true;
     }
 
