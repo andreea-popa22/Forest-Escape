@@ -31,6 +31,7 @@ public class CollisionHandler : MonoBehaviour
             case "Fin":
                 arrivedAtFinish = true;
                 LoadNextLevel();
+                UnloadPreviousLevel();
                 break;
             case "Friendly":
                 GameObject.Find("Player").GetComponent<PlayerController>().inAir = false;
@@ -70,11 +71,65 @@ public class CollisionHandler : MonoBehaviour
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         int nextSceneIndex = currentSceneIndex + 1;
-        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
+
+        if (nextSceneIndex == 3)
         {
             nextSceneIndex = 0;
         }
-        SceneManager.LoadScene(nextSceneIndex);
+        
+        if (nextSceneIndex == 0)
+        {
+            SceneManager.LoadScene("TotalScene");
+        }
+        if (nextSceneIndex == 1)
+        {
+            SceneManager.LoadScene("TotalScene1");
+        }
+        if (nextSceneIndex == 2)
+        {
+            SceneManager.LoadScene("TotalScene2");
+        }
+        
+        
+
+        Debug.Log("sceneManager.sceneCountInBuildSettings");
+        Debug.Log(SceneManager.sceneCountInBuildSettings);
+        Debug.Log("currentSceneIndexs");
+        Debug.Log(currentSceneIndex);
+        Debug.Log("nextSceneIndex");
+        Debug.Log(nextSceneIndex);
+    }
+
+    void UnloadPreviousLevel()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+    
+        if (currentSceneIndex == 1)
+            {
+                if(SceneManager.GetSceneByName("TotalScene").isLoaded)
+                {
+                    SceneManager.UnloadSceneAsync("TotalScene");
+                }
+            }
+
+        if (currentSceneIndex == 2)
+        {
+            if(SceneManager.GetSceneByName("TotalScene1").isLoaded)
+            {
+                SceneManager.UnloadSceneAsync("TotalScene1");
+            }
+
+        }
+        
+        if (currentSceneIndex == 0)
+        {
+            if(SceneManager.GetSceneByName("TotalScene2").isLoaded)
+            {
+                SceneManager.UnloadSceneAsync("TotalScene2");
+            }
+
+        }
+        
     }
 
     public float GetMana()
