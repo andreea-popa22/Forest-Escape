@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -643,6 +643,8 @@ MonoBehaviour:
   playerSpeed: 10
   jumpHeight: 12
   gravity: 2
+  boostCooldown: 5
+  boostDuration: 2
   inAir: 0
 --- !u!4 &449156591
 Transform:
@@ -688,6 +690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 401d7ac3d4f76ae478056da1c649893f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxMana: 100
   manaPoints: 0
 --- !u!114 &449156594
 MonoBehaviour:
@@ -934,7 +937,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &485142730
 Transform:
   m_ObjectHideFlags: 0
