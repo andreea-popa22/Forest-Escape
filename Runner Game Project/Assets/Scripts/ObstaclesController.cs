@@ -6,7 +6,7 @@ using UnityEngine;
 public class ObstaclesController : MonoBehaviour
 {
     public Transform player; //pozitie player
-    [SerializeField] float maxDistanceDropper = 25f; //distanta de unde cade dropperul
+    [SerializeField] public float maxDistanceDropper = 25f; //distanta de unde cade dropperul
     private Rigidbody rb;
     [SerializeField] float maxDistanceSpinner = 30f; //distanta de unde se roteste spinnerul
     [SerializeField] private float maxDistanceMovingObj = 30;

@@ -6,6 +6,7 @@ using System.Xml.Schema;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Vector3 = UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
@@ -14,12 +15,12 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     [SerializeField] private float currentLane = Lane.Middle;
     private Vector3 targetPosition = Vector3.zero;
-    public bool pausedGame = false;
+    [NonSerialized] public bool pausedGame = false;
     [NonSerialized] public GameObject ui;
     [NonSerialized] public Canvas pauseUI;
     [NonSerialized] public Canvas saveStateUI;
 
-    [SerializeField] float playerSpeed = 5f;
+    [SerializeField] public float playerSpeed = 5f;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float gravity;
 
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
     private bool hasBoost = false;
     private bool hasBoostCooldown;
     public bool inAir = false;
-    public Animator anim;
+    [NonSerialized] public Animator anim;
 
     private void Start()
     {
@@ -39,6 +40,13 @@ public class PlayerController : MonoBehaviour
         //controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
         ui = GameObject.Find("UI");
+        playerSpeed = SceneManager.GetActiveScene().name switch
+        {
+            "TotalScene" => 5,
+            "TotalScene1" => 10,
+            "TotalScene2" => 15,
+            _ => 5
+        };
     }
 
     private void Update()
