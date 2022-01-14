@@ -26,12 +26,12 @@ public class GameData
     public List<ObjectData> objects = new List<ObjectData>();
 }
 
-// [Serializable]
-// public class LeaderboardEntry
-// {
-//     public string name;
-//     public int score;
-// }
+[Serializable]
+public class LeaderboardEntry
+{
+    public string name;
+    public int score;
+}
 
 public static class SaveSystem
 {
