@@ -938,6 +938,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Small Rock 5 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3076851221291203540, guid: e282280263592284b8c7c955e3517805, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3529263316264705873, guid: e282280263592284b8c7c955e3517805, type: 3}
       propertyPath: m_RootOrder
       value: 64
@@ -3690,6 +3694,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Branch 3 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7541727922787600887, guid: fdd3446cc2b63d44fb714ae3ca931241, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdd3446cc2b63d44fb714ae3ca931241, type: 3}
 --- !u!4 &668156144 stripped
@@ -5896,6 +5904,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Small Rock 5 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3076851221291203540, guid: e282280263592284b8c7c955e3517805, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3529263316264705873, guid: e282280263592284b8c7c955e3517805, type: 3}
       propertyPath: m_RootOrder
       value: 35
@@ -6671,6 +6683,10 @@ PrefabInstance:
     - target: {fileID: 2982408054991540482, guid: fdd3446cc2b63d44fb714ae3ca931241, type: 3}
       propertyPath: m_Name
       value: Branch 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7541727922787600887, guid: fdd3446cc2b63d44fb714ae3ca931241, type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdd3446cc2b63d44fb714ae3ca931241, type: 3}
@@ -10210,6 +10226,10 @@ PrefabInstance:
     - target: {fileID: 6976615927814636928, guid: 37f9aeb2fdaf19f4a8efd7ce8a593dcd, type: 3}
       propertyPath: m_Name
       value: Branch 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7297900967894978746, guid: 37f9aeb2fdaf19f4a8efd7ce8a593dcd, type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37f9aeb2fdaf19f4a8efd7ce8a593dcd, type: 3}
