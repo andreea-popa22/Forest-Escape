@@ -11,9 +11,23 @@ public class CollisionHandler : MonoBehaviour
     private bool arrivedAtFinish = false;
 
     private float manaPerPickable = 25f;
+    public GameObject ui;
+    public Canvas menu;
+    
+    public PlayerController pc;
 
     public void Start()
     {
+        // pc = GameObject.Find("Player").GetComponent<PlayerController>();
+        // int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        // ui = GameObject.Find("UI");
+        // menu = ui.transform.Find("Start Canvas").GetComponent<Canvas>();
+        // if (currentSceneIndex == 0)
+        // {
+        //     menu.gameObject.SetActive(true);
+        // }
+        
+           
     }
 
     private void handleObject(GameObject gameObject)
@@ -71,7 +85,7 @@ public class CollisionHandler : MonoBehaviour
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         int nextSceneIndex = currentSceneIndex + 1;
-
+        
         if (nextSceneIndex == 3)
         {
             nextSceneIndex = 0;
@@ -89,15 +103,20 @@ public class CollisionHandler : MonoBehaviour
         {
             SceneManager.LoadScene("TotalScene2");
         }
+
+        // if (nextSceneIndex != 0)
+        // {
+        //     pc.enabled = true;
+        // }
         
         
 
-        Debug.Log("sceneManager.sceneCountInBuildSettings");
-        Debug.Log(SceneManager.sceneCountInBuildSettings);
-        Debug.Log("currentSceneIndexs");
-        Debug.Log(currentSceneIndex);
-        Debug.Log("nextSceneIndex");
-        Debug.Log(nextSceneIndex);
+        // Debug.Log("sceneManager.sceneCountInBuildSettings");
+        // Debug.Log(SceneManager.sceneCountInBuildSettings);
+        // Debug.Log("currentSceneIndexs");
+        // Debug.Log(currentSceneIndex);
+        // Debug.Log("nextSceneIndex");
+        // Debug.Log(nextSceneIndex);
     }
 
     void UnloadPreviousLevel()
