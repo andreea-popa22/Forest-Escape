@@ -12,8 +12,11 @@ public class CollisionHandler : MonoBehaviour
 
     private float manaPerPickable = 25f;
 
+    [NonSerialized] private PlayerScore ps;
+
     public void Start()
     {
+        ps = GameObject.Find("Player").GetComponent<PlayerScore>();
     }
 
     private void handleObject(GameObject gameObject)
@@ -29,6 +32,7 @@ public class CollisionHandler : MonoBehaviour
                 SetMana(GetMana() + manaPerPickable);
                 break;
             case "Fin":
+                ps.AddScore();
                 arrivedAtFinish = true;
                 LoadNextLevel();
                 UnloadPreviousLevel();

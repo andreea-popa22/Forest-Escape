@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour
     private GameObject healthSprite;
     [NonSerialized] public GameObject ui;
     [NonSerialized] public Canvas menu;
+    [NonSerialized] private string prevScoreKey = "PreviousScore";
 
     void Start()
     {

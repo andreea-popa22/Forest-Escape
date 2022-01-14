@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class MainUI : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class MainUI : MonoBehaviour
     public Button resumeButton;
     public PlayerController pc;
     private InputField inputName;
+    [NonSerialized] private string prevScoreKey = "PreviousScore";
 
     void Awake()
     {
@@ -48,7 +50,8 @@ public class MainUI : MonoBehaviour
     
     void StartGame()
     {
-        Debug.Log("yes");
+        PlayerPrefs.SetInt(prevScoreKey, 0);
+        PlayerPrefs.Save();
         menu.gameObject.SetActive(!menu.gameObject.activeSelf);
         pc.enabled = true;
     }
