@@ -55,6 +55,8 @@ public class MainUI : MonoBehaviour
 
     void ResumeGameProgress()
     {
-        //SaveSystem.Load();
+        menu.gameObject.SetActive(!menu.gameObject.activeSelf);
+        pc.enabled = true;
+        SaveSystem.Load();
     }
 }

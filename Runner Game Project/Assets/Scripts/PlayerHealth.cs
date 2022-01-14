@@ -10,8 +10,8 @@ public class PlayerHealth : MonoBehaviour
     private float fullHealthLevel;
     private SpriteRenderer sprite;
     private GameObject healthSprite;
-    public GameObject ui;
-    public Canvas menu;
+    [NonSerialized] public GameObject ui;
+    [NonSerialized] public Canvas menu;
 
     void Start()
     {
