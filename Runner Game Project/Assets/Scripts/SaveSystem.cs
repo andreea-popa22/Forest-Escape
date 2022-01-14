@@ -50,8 +50,10 @@ public static class SaveSystem
 
     public static List<LeaderboardEntry> LoadLeaderboards()
     {
-        string data = File.ReadAllText(LEADERBOARD_FILE);
-        return JsonUtility.FromJson<List<LeaderboardEntry>>(data);
+        if (File.Exists(LEADERBOARD_FILE))
+            return JsonUtility.FromJson<List<LeaderboardEntry>>(File.ReadAllText(LEADERBOARD_FILE));
+        else
+            return new List<LeaderboardEntry>();
     }
 
     public static void Save()
