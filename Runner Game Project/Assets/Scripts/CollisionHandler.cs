@@ -41,6 +41,8 @@ public class CollisionHandler : MonoBehaviour
                 GameObject.Find("Player").GetComponent<PlayerController>().inAir = false;
                 GameObject.Find("Player").GetComponent<Animator>().SetBool("inAir1",false);
                 break;
+            case "Decor":
+                break;
             default:
                 StartCrashSequence();
                 break;
@@ -76,7 +78,7 @@ public class CollisionHandler : MonoBehaviour
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         int nextSceneIndex = currentSceneIndex + 1;
-
+        
         if (nextSceneIndex == 3)
         {
             nextSceneIndex = 0;
@@ -94,15 +96,20 @@ public class CollisionHandler : MonoBehaviour
         {
             SceneManager.LoadScene("TotalScene2");
         }
+
+        // if (nextSceneIndex != 0)
+        // {
+        //     pc.enabled = true;
+        // }
         
         
 
-        Debug.Log("sceneManager.sceneCountInBuildSettings");
-        Debug.Log(SceneManager.sceneCountInBuildSettings);
-        Debug.Log("currentSceneIndexs");
-        Debug.Log(currentSceneIndex);
-        Debug.Log("nextSceneIndex");
-        Debug.Log(nextSceneIndex);
+        // Debug.Log("sceneManager.sceneCountInBuildSettings");
+        // Debug.Log(SceneManager.sceneCountInBuildSettings);
+        // Debug.Log("currentSceneIndexs");
+        // Debug.Log(currentSceneIndex);
+        // Debug.Log("nextSceneIndex");
+        // Debug.Log(nextSceneIndex);
     }
 
     void UnloadPreviousLevel()

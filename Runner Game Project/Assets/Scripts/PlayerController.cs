@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public float boostCooldown = 5f;
     public float boostDuration = 2f;
     private float speedBoost = 2f;
-    private float invincibilityDuration = 2f;
+    private float invincibilityDuration = 99999f;
     private bool hasInvincibility = false;
     private bool hasBoost = false;
     private bool hasBoostCooldown;

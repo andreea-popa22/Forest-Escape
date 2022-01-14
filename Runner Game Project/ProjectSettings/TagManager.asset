@@ -5,6 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - Spinner
+  - Pickable
+  - Dropper
+  - Moving Obstacle
+  - Fin
+  - Friendly
+  - Obstacle
+  - Decor
   layers:
   - Default
   - TransparentFX
