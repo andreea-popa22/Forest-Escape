@@ -84,7 +84,7 @@ public static class SaveSystem
         File.WriteAllText(SAVE_FILE, JsonUtility.ToJson(gameData, true));
     }
 
-    public static void Load()
+    public static void Load(bool loadGeneratedObjects = false)
     {
         if (!File.Exists(SAVE_FILE))
             return;
@@ -102,11 +102,14 @@ public static class SaveSystem
         player.GetComponent<PlayerHealth>().TransformHealthBar();
         player.GetComponent<PlayerMana>().TransformManaBar();
 
-        TerrainGenerator.Pool.SetInactiveAll();
-        foreach (var data in gameData.objects)
+        if (loadGeneratedObjects)
         {
-            var ob = TerrainGenerator.Pool.GetObject(data.prefab);
-            ob.transform.position = data.position;
+            TerrainGenerator.Pool.SetInactiveAll();
+            foreach (var data in gameData.objects)
+            {
+                var ob = TerrainGenerator.Pool.GetObject(data.prefab);
+                ob.transform.position = data.position;
+            }
         }
     }
 }
