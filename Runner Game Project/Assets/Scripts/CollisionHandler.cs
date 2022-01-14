@@ -43,6 +43,8 @@ public class CollisionHandler : MonoBehaviour
                 break;
             case "Decor":
                 break;
+            case "Untagged":
+                break;
             default:
                 StartCrashSequence();
                 break;
@@ -84,10 +86,10 @@ public class CollisionHandler : MonoBehaviour
             nextSceneIndex = 0;
         }
         
-        if (nextSceneIndex == 0)
-        {
-            SceneManager.LoadScene("TotalScene");
-        }
+        // if (nextSceneIndex == 0)
+        // {
+        //     SceneManager.LoadScene("TotalScene");
+        // }
         if (nextSceneIndex == 1)
         {
             SceneManager.LoadScene("TotalScene1");
