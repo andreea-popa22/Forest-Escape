@@ -37,7 +37,7 @@ public class DeactivateObstacles : MonoBehaviour
         }
     }
 
-    void Check()
+    public void Check()
     {
         float playerZ = player.transform.position.z;
         // dezactiveaza obstacolele daca sunt in spatele player-ului, activeaza pe cele care intra in vizor

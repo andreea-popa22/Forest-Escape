@@ -127,6 +127,7 @@ public static class SaveSystem
 
         var camera = GameObject.Find("Virtual Follow Camera").GetComponent<CinemachineVirtualCamera>();
         camera.ForceCameraPosition(new Vector3(0, 2.7f, player.transform.position.z - 7), Quaternion.Euler(20.343f, 0.116f, -0.28f));
+        GameObject.Find("Environment").GetComponent<DeactivateObstacles>().Check(); // spawneaza obiectele
         player.GetComponent<PlayerController>().PauseGame();
     }
 
