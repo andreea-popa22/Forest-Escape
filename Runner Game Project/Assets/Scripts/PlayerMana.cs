@@ -32,8 +32,11 @@ public class PlayerMana : MonoBehaviour
         {
             manaPoints -= Time.deltaTime * 25;
             TransformManaBar();
-            //if (manaPoints < 0)
-            //    pc.hasInvincibility = false;
+            if (manaPoints < 0)
+            {
+                pc.hasInvincibility = false;
+                Debug.Log("Player invincible no more!");
+            }
         }
     }
 

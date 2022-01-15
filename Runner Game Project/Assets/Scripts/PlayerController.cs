@@ -60,9 +60,10 @@ public class PlayerController : MonoBehaviour
 
         if (!hasInvincibility && Input.GetKeyDown(KeyCode.F))
         {
-            //hasInvincibility = true;
+            Debug.Log("Player now invincible!");
+            hasInvincibility = true;
             // activate invincibility if mana is full
-            StartCoroutine(ActivateInvincibility(GetMana()));
+            //StartCoroutine(ActivateInvincibility(GetMana()));
         }
 
         if (Input.GetKeyDown(KeyCode.R)) SaveSystem.Save();
@@ -118,6 +119,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("boost ready");
     }
 
+    // nu mai este folosit
     IEnumerator ActivateInvincibility(float duration)
     {
         Debug.Log("Player now invincible!");
