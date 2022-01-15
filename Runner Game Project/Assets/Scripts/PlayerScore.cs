@@ -47,9 +47,10 @@ public class PlayerScore : MonoBehaviour
         scoreText.GetComponent<Text>().text = "Score: " + (int) score;
     }
 
-    public void SaveScoreToPrefs()
+    public int SaveScoreToPrefs()
     {
         PlayerPrefs.SetInt(PlayerPrefsKeys.prevSceneScore, (int) score);
         PlayerPrefs.Save();
+        return (int) score;
     }
 }

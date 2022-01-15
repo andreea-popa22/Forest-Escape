@@ -17,6 +17,7 @@ public class CollisionHandler : MonoBehaviour
     [NonSerialized] public GameObject ui;
     [NonSerialized] public Canvas endMenu;
     [NonSerialized] public Text congratulations;
+    [NonSerialized] private Text finalScore;
 
     public void Start()
     {
@@ -24,6 +25,7 @@ public class CollisionHandler : MonoBehaviour
         
         ui = GameObject.Find("UI");
         endMenu = ui.transform.Find("End Canvas").GetComponent<Canvas>();
+        finalScore = endMenu.transform.Find("Final Score").GetComponent<Text>();
 
         congratulations = endMenu.transform.Find("Congratulations").GetComponent<Text>();
     }
@@ -83,7 +85,7 @@ public class CollisionHandler : MonoBehaviour
         float damage = IsInvincibile() ? 0 : 25f;
         crashPosition = transform.position;
         gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);      // Decrease health
-        transform.position += Vector3.back * 3;                          // Move player back
+        transform.position += Vector3.back * 6;                          // Move player back
     }
 
     void LoadNextLevel()
@@ -162,6 +164,8 @@ public class CollisionHandler : MonoBehaviour
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         if (currentSceneIndex == 2)
         {
+            int score = ps.SaveScoreToPrefs();
+            finalScore.text = "Final score: " + score;
             SaveSystem.SaveHighScore();
             endMenu.gameObject.SetActive(true);
             congratulations.gameObject.SetActive(true);

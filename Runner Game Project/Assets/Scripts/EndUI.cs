@@ -14,7 +14,6 @@ public class EndUI : MonoBehaviour
     [NonSerialized] private Text content;
     [NonSerialized] private Canvas leaderboardMenu;
     [NonSerialized] private string prevCanvas;
-    [NonSerialized] private string prevCanvasKey = "PreviousCanvas";
     
     // Start is called before the first frame update
     void Start()
@@ -31,8 +30,6 @@ public class EndUI : MonoBehaviour
         
         content = leaderboardMenu.transform.Find("Content").GetComponent<Text>();
         
-        prevCanvasKey = PlayerPrefs.GetString(prevCanvas, "Start");
-
     }
 
     // Update is called once per frame
@@ -48,7 +45,7 @@ public class EndUI : MonoBehaviour
 
     void WriteLeaderboardInUI()
     {
-        PlayerPrefs.SetString(prevCanvasKey, "End");
+        PlayerPrefs.SetString(PlayerPrefsKeys.prevCanvasKey, "End");
         PlayerPrefs.Save();
         endMenu.gameObject.SetActive(false);
         leaderboardMenu.gameObject.SetActive(true);

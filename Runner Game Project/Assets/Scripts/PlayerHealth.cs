@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
@@ -16,6 +17,7 @@ public class PlayerHealth : MonoBehaviour
     [NonSerialized] public Canvas endMenu;
     [NonSerialized] public Text gameOver;
     [NonSerialized] private GameObject obstacles;
+    [NonSerialized] private Text finalScore;
     //[NonSerialized] private string prevScoreKey = "PreviousScore";
 
     void Start()
@@ -25,6 +27,7 @@ public class PlayerHealth : MonoBehaviour
         
         ui = GameObject.Find("UI");
         endMenu = ui.transform.Find("End Canvas").GetComponent<Canvas>();
+        finalScore = endMenu.transform.Find("Final Score").GetComponent<Text>();
 
         gameOver = endMenu.transform.Find("Game over").GetComponent<Text>();
 
@@ -61,9 +64,9 @@ public class PlayerHealth : MonoBehaviour
             // activate end UI
             endMenu.gameObject.SetActive(true);
             gameOver.gameObject.SetActive(true);
+            int score = ps.SaveScoreToPrefs();
+            finalScore.text = "Final score: " + score;
             obstacles.gameObject.SetActive(false);
-            Debug.Log("You lost!");
-            ps.SaveScoreToPrefs();
             gameObject.GetComponent<PlayerController>().enabled = false;
             SaveSystem.SaveHighScore();
             //ch.Invoke("ReloadLevel", 1f);

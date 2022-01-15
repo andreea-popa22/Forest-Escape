@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 public static class PlayerPrefsKeys {
     public const string prevSceneScore = "PreviousScore";
     public const string name = "PlayerName";
+    public const string prevCanvasKey = "PreviousCanvas";
 }
 
 // Lane-ul este pe Axa X
