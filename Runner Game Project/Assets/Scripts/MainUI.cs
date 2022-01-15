@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
 
@@ -39,7 +40,10 @@ public class MainUI : MonoBehaviour
         leaderboardButton.onClick.AddListener(WriteLeaderboardInUI);
         
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
-        pc.enabled = false;
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+            pc.enabled = false;
+        else
+            pc.enabled = true;
         
         //ps = GameObject.Find("Player").GetComponent<PlayerScore>();
         
@@ -68,7 +72,7 @@ public class MainUI : MonoBehaviour
     {
         menu.gameObject.SetActive(!menu.gameObject.activeSelf);
         pc.enabled = true;
-        SaveSystem.Load();
+        SaveSystem.Load(); // incarca in scena asta
     }
     
     void WriteLeaderboardInUI()

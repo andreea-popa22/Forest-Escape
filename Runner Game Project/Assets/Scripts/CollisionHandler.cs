@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class CollisionHandler : MonoBehaviour
 {
     public Vector3 crashPosition;
-    public bool isTransitioning = false;
     private bool collisionDisabled = false;
     private bool arrivedAtFinish = false;
 
@@ -32,8 +31,6 @@ public class CollisionHandler : MonoBehaviour
 
     private void handleObject(GameObject gameObject)
     {
-        //if (isTransitioning || collisionDisabled) { return; }
-
         switch (gameObject.tag)
         {
             case "Pickable":
@@ -74,11 +71,11 @@ public class CollisionHandler : MonoBehaviour
     }
     
 
-    public void ReloadLevel()
-    {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex);
-    }
+    //public void ReloadLevel()
+    //{
+    //    int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+    //    SceneManager.LoadScene(currentSceneIndex);
+    //}
     
     void StartCrashSequence()
     {
@@ -112,7 +109,7 @@ public class CollisionHandler : MonoBehaviour
         }
     }
 
-    void UnloadPreviousLevel()
+    public static void UnloadPreviousLevel()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
     

@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        GameObject.Find("Virtual Follow Camera").GetComponent<CinemachineVirtualCamera>().Follow = this.transform;
         //controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
         ui = GameObject.Find("UI");

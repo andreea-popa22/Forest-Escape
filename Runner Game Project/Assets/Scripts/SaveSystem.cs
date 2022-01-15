@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using Cinemachine;
+using UnityEngine.SceneManagement;
 using System.Runtime.Serialization.Formatters.Binary;
 using Newtonsoft.Json;
 
@@ -24,6 +26,7 @@ public class GameData
     public string health;
     public string mana;
     public string score;
+    public int sceneIndex;
     public List<ObjectData> objects = new List<ObjectData>();
 }
 
@@ -57,6 +60,7 @@ public static class SaveSystem
     public static readonly string SAVE_FOLDER = Application.persistentDataPath + "/";
     public static readonly string SAVE_FILE = SAVE_FOLDER + "save.json";
     public static readonly string LEADERBOARD_FILE = SAVE_FOLDER + "leaderboard.json";
+    public static GameData s_gameData;
 
     public static void AddToLeaderBoard(List<LeaderboardEntry> list)
     {
@@ -80,6 +84,7 @@ public static class SaveSystem
             mana = JsonUtility.ToJson(player.GetComponent<PlayerMana>()),
             score = JsonUtility.ToJson(player.GetComponent<PlayerScore>()),
             position = player.GetComponent<Transform>().position,
+            sceneIndex = SceneManager.GetActiveScene().buildIndex,
         };
 
         GameObject obstacles = GameObject.Find("Obstacles");
@@ -98,15 +103,9 @@ public static class SaveSystem
         File.WriteAllText(SAVE_FILE, JsonUtility.ToJson(gameData, true));
     }
 
-    public static void Load(bool loadGeneratedObjects = false)
+    public static void LoadFromGameData(GameData gameData, bool loadGeneratedObjects = false)
     {
-        if (!File.Exists(SAVE_FILE))
-            return;
-
-        string dataJson = File.ReadAllText(SAVE_FILE);
-
         var player = GameObject.Find("Player");
-        GameData gameData = JsonUtility.FromJson<GameData>(dataJson);
         JsonUtility.FromJsonOverwrite(gameData.controller, player.GetComponent<PlayerController>());
         JsonUtility.FromJsonOverwrite(gameData.health, player.GetComponent<PlayerHealth>());
         JsonUtility.FromJsonOverwrite(gameData.mana, player.GetComponent<PlayerMana>());
@@ -124,6 +123,28 @@ public static class SaveSystem
                 var ob = TerrainGenerator.Pool.GetObject(data.prefab);
                 ob.transform.position = data.position;
             }
+        }
+
+        var camera = GameObject.Find("Virtual Follow Camera").GetComponent<CinemachineVirtualCamera>();
+        camera.ForceCameraPosition(new Vector3(0, 2.7f, player.transform.position.z - 7), Quaternion.Euler(20.343f, 0.116f, -0.28f));
+        player.GetComponent<PlayerController>().PauseGame();
+    }
+
+    public static void Load(bool loadGeneratedObjects = false)
+    {
+        if (!File.Exists(SAVE_FILE))
+            return;
+
+        GameData gameData = JsonUtility.FromJson<GameData>(File.ReadAllText(SAVE_FILE));
+        if(gameData.sceneIndex == SceneManager.GetActiveScene().buildIndex)
+        {
+            LoadFromGameData(gameData);
+            return;
+        }
+        else
+        {
+            s_gameData = gameData;
+            SceneManager.LoadScene(s_gameData.sceneIndex, LoadSceneMode.Single);
         }
     }
 

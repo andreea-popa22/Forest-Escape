@@ -4623,6 +4623,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 8935795708712221851, guid: e12d63a378a27b549ba99778abb9d7f4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e12d63a378a27b549ba99778abb9d7f4, type: 3}
 --- !u!1 &1098091061
@@ -4637,6 +4641,7 @@ GameObject:
   - component: {fileID: 1098091064}
   - component: {fileID: 1098091063}
   - component: {fileID: 1098091065}
+  - component: {fileID: 1098091066}
   m_Layer: 0
   m_Name: Environment
   m_TagString: Untagged
@@ -4698,6 +4703,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd3cd769bd469d74cadc4b5a55027a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1098091066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098091061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64e9894ade34ab949a3a836f3ac7b2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1108259462
@@ -7621,6 +7638,10 @@ PrefabInstance:
     - target: {fileID: 3273350113162332544, guid: fdf54e92b92ba4141a26e6d0fddfb3ca, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3273350113162332547, guid: fdf54e92b92ba4141a26e6d0fddfb3ca, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3273350113162332551, guid: fdf54e92b92ba4141a26e6d0fddfb3ca, type: 3}
       propertyPath: m_RootOrder

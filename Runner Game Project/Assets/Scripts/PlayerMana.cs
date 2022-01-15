@@ -14,8 +14,6 @@ public class PlayerMana : MonoBehaviour
     private GameObject manaSprite;
     private Vector2 screenBounds;
 
-    
-
     // Start is called before the first frame update
     void Start()
     {
