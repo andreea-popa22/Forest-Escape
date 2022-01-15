@@ -1736,7 +1736,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crashPosition: {x: 0, y: 0, z: 0}
-  isTransitioning: 0
 --- !u!136 &449156597
 CapsuleCollider:
   m_ObjectHideFlags: 0

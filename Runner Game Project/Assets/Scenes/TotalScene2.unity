@@ -1882,7 +1882,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crashPosition: {x: 0, y: 0, z: 0}
-  isTransitioning: 0
 --- !u!136 &449156597
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4622,10 +4621,6 @@ PrefabInstance:
     - target: {fileID: 8935795707720267602, guid: e12d63a378a27b549ba99778abb9d7f4, type: 3}
       propertyPath: m_Name
       value: UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 8935795708712221851, guid: e12d63a378a27b549ba99778abb9d7f4, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e12d63a378a27b549ba99778abb9d7f4, type: 3}
