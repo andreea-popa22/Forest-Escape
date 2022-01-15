@@ -15,6 +15,7 @@ public class PlayerHealth : MonoBehaviour
     [NonSerialized] public GameObject ui;
     [NonSerialized] public Canvas endMenu;
     [NonSerialized] public Text gameOver;
+    [NonSerialized] private GameObject obstacles;
     //[NonSerialized] private string prevScoreKey = "PreviousScore";
 
     void Start()
@@ -24,11 +25,12 @@ public class PlayerHealth : MonoBehaviour
         
         ui = GameObject.Find("UI");
         endMenu = ui.transform.Find("End Canvas").GetComponent<Canvas>();
-        
+
         gameOver = endMenu.transform.Find("Game over").GetComponent<Text>();
 
-        
         ps = GameObject.Find("Player").GetComponent<PlayerScore>();
+        
+        obstacles = GameObject.Find("Obstacles-Manual");
 
     }
 
@@ -48,6 +50,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (healthPoints != 0)
         {
+            
             healthPoints -= damage;
             TransformHealthBar();
             CollisionHandler ch = gameObject.GetComponent<CollisionHandler>();
@@ -58,7 +61,7 @@ public class PlayerHealth : MonoBehaviour
             // activate end UI
             endMenu.gameObject.SetActive(true);
             gameOver.gameObject.SetActive(true);
-            
+            obstacles.gameObject.SetActive(false);
             Debug.Log("You lost!");
             ps.SaveScoreToPrefs();
             gameObject.GetComponent<PlayerController>().enabled = false;

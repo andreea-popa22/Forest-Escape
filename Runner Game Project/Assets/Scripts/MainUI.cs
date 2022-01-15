@@ -15,6 +15,9 @@ public class MainUI : MonoBehaviour
     [NonSerialized] private Button leaderboardButton;
     [NonSerialized] private Text content;
     [NonSerialized] private Canvas leaderboardMenu;
+    [NonSerialized] private string prevCanvas;
+    [NonSerialized] private string prevCanvasKey = "PreviousCanvas";
+
     
     void Awake()
     {
@@ -45,6 +48,7 @@ public class MainUI : MonoBehaviour
         inputName = menu.transform.Find("Name Textbox").GetComponent<InputField>();
         
         content = leaderboardMenu.transform.Find("Content").GetComponent<Text>();
+        prevCanvasKey = PlayerPrefs.GetString(prevCanvas, "Start");
     }
     
     void StartGame()
@@ -72,10 +76,11 @@ public class MainUI : MonoBehaviour
     
     void WriteLeaderboardInUI()
     {
+        PlayerPrefs.SetString(prevCanvasKey, "Start");
+        PlayerPrefs.Save();
         menu.gameObject.SetActive(false);
         leaderboardMenu.gameObject.SetActive(true);
         string text = SaveSystem.WriteLeaderboard();
-        Debug.Log("dc nu scrie");
         content.text = text;
     }
 }

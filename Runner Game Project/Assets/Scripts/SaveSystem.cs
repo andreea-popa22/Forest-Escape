@@ -153,10 +153,8 @@ public static class SaveSystem
     {
         string text = "";
         List<LeaderboardEntry> leaderboard = LoadLeaderboard();
-        Debug.Log(leaderboard.Count.ToString());
         foreach (LeaderboardEntry entry in leaderboard)
         {
-            Debug.Log("nu e gol");
             // add place
             text += (leaderboard.IndexOf(entry) + 1).ToString() + ".  ";
             // add score
