@@ -27,8 +27,8 @@ public class PlayerController : MonoBehaviour
     public float boostCooldown = 5f;
     public float boostDuration = 2f;
     private float speedBoost = 2f;
-    private float invincibilityDuration = 99999f;
-    private bool hasInvincibility = false;
+
+    public bool hasInvincibility = false;
     private bool hasBoost = false;
     private bool hasBoostCooldown;
     public bool inAir = false;
@@ -57,10 +57,12 @@ public class PlayerController : MonoBehaviour
             // activate the cooldown and start the deactivation method for the boost
             StartCoroutine(ActivateCooldown());
         }
-        if (Input.GetKeyDown(KeyCode.F) && GetMana() == GetMaxMana())
+
+        if (!hasInvincibility && Input.GetKeyDown(KeyCode.F))
         {
+            //hasInvincibility = true;
             // activate invincibility if mana is full
-            StartCoroutine(ActivateInvincibility(invincibilityDuration));
+            StartCoroutine(ActivateInvincibility(GetMana()));
         }
 
         if (Input.GetKeyDown(KeyCode.R)) SaveSystem.Save();
@@ -112,17 +114,18 @@ public class PlayerController : MonoBehaviour
         hasBoost = false;
         yield return new WaitForSeconds(boostCooldown);
         hasBoostCooldown = false;
+        SetMana(0);
         Debug.Log("boost ready");
     }
 
     IEnumerator ActivateInvincibility(float duration)
     {
-        SetMana(0);
         Debug.Log("Player now invincible!");
         hasInvincibility = true;
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(duration / 25);
         hasInvincibility = false;
         Debug.Log("Player invincible no more!");
+        SetMana(0);
     }
 
     public void MovingForward()

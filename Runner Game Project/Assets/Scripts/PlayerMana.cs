@@ -13,21 +13,28 @@ public class PlayerMana : MonoBehaviour
     private SpriteRenderer spriteBar;
     private GameObject manaSprite;
     private Vector2 screenBounds;
+    private PlayerController pc; 
 
     // Start is called before the first frame update
     void Start()
     {
         manaBar = GameObject.Find("ManaBar");
         spriteBar = GameObject.Find("Mana Bar Sprite").GetComponent<SpriteRenderer>();
+        pc = this.gameObject.GetComponent<PlayerController>();
 
         SetMana(100f);
         //screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (pc.hasInvincibility)
+        {
+            manaPoints -= Time.deltaTime * 25;
+            TransformManaBar();
+            //if (manaPoints < 0)
+            //    pc.hasInvincibility = false;
+        }
     }
 
     public float GetMaxMana()
