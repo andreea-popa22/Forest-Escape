@@ -25,7 +25,7 @@ public class PlayerHealth : MonoBehaviour
         ui = GameObject.Find("UI");
         endMenu = ui.transform.Find("End Canvas").GetComponent<Canvas>();
         
-        gameOver = menu.transform.Find("Game over").GetComponent<Text>();
+        gameOver = endMenu.transform.Find("Game over").GetComponent<Text>();
 
         
         ps = GameObject.Find("Player").GetComponent<PlayerScore>();

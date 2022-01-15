@@ -53,6 +53,8 @@ public class CollisionHandler : MonoBehaviour
                 break;
             case "Decor":
                 break;
+            case "Untagged":
+                break;
             default:
                 StartCrashSequence();
                 break;
