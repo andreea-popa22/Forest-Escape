@@ -164,6 +164,8 @@ public class CollisionHandler : MonoBehaviour
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         if (currentSceneIndex == 2)
         {
+            PlayerController pc = GameObject.Find("Player").GetComponent<PlayerController>();
+            pc.enabled = false;
             int score = ps.SaveScoreToPrefs();
             finalScore.text = "Final score: " + score;
             SaveSystem.SaveHighScore();
